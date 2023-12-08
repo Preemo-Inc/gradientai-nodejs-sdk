@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "declarationMap": true,
+    "target": "ES6",
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "outDir": "dist/cjs",
+    "rootDir": "src",
+    "moduleResolution": "node",
+    "typeRoots": ["node_modules/@types"]
+  },
+  "exclude": ["dist", "node_modules"]
+}
