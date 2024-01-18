@@ -34,6 +34,12 @@ import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError } from './base';
 export interface BaseModel {
     /**
      * 
+     * @type {Array<string>}
+     * @memberof BaseModel
+     */
+    'capabilities': Array<BaseModelCapabilitiesEnum>;
+    /**
+     * 
      * @type {string}
      * @memberof BaseModel
      */
@@ -58,6 +64,12 @@ export interface BaseModel {
     'type': BaseModelTypeEnum;
 }
 
+export const BaseModelCapabilitiesEnum = {
+    Complete: 'complete',
+    FineTune: 'fineTune'
+} as const;
+
+export type BaseModelCapabilitiesEnum = typeof BaseModelCapabilitiesEnum[keyof typeof BaseModelCapabilitiesEnum];
 export const BaseModelTypeEnum = {
     BaseModel: 'baseModel'
 } as const;
@@ -70,6 +82,12 @@ export type BaseModelTypeEnum = typeof BaseModelTypeEnum[keyof typeof BaseModelT
  * @interface CompleteModelBodyParams
  */
 export interface CompleteModelBodyParams {
+    /**
+     * Automatically adds the recommended base model templating.
+     * @type {boolean}
+     * @memberof CompleteModelBodyParams
+     */
+    'autoTemplate'?: boolean | null;
     /**
      * 
      * @type {CompleteModelBodyParamsGuidance}
@@ -88,6 +106,12 @@ export interface CompleteModelBodyParams {
      * @memberof CompleteModelBodyParams
      */
     'query': string;
+    /**
+     * 
+     * @type {CompleteModelBodyParamsRag}
+     * @memberof CompleteModelBodyParams
+     */
+    'rag'?: CompleteModelBodyParamsRag | null;
     /**
      * This parameter adjusts the degree of randomness in generation. Higher temperature results in more diverse generations.
      * @type {number}
@@ -134,10 +158,23 @@ export const CompleteModelBodyParamsGuidanceTypeEnum = {
 export type CompleteModelBodyParamsGuidanceTypeEnum = typeof CompleteModelBodyParamsGuidanceTypeEnum[keyof typeof CompleteModelBodyParamsGuidanceTypeEnum];
 
 /**
+ * 
+ * @export
+ * @interface CompleteModelBodyParamsRag
+ */
+export interface CompleteModelBodyParamsRag {
+    /**
+     * The ID of the RAG collection to retrieve context from before running completion
+     * @type {string}
+     * @memberof CompleteModelBodyParamsRag
+     */
+    'collectionId': string;
+}
+/**
  * @type CompleteModelError
  * @export
  */
-export type CompleteModelError = CompleteModelErrorOneOf | CompleteModelErrorOneOf1 | CompleteModelErrorOneOf2 | CompleteModelErrorOneOf3 | CompleteModelErrorOneOf4 | CompleteModelErrorOneOf5;
+export type CompleteModelError = CompleteModelErrorOneOf | CompleteModelErrorOneOf1 | CompleteModelErrorOneOf10 | CompleteModelErrorOneOf2 | CompleteModelErrorOneOf3 | CompleteModelErrorOneOf4 | CompleteModelErrorOneOf5 | CompleteModelErrorOneOf6 | CompleteModelErrorOneOf7 | CompleteModelErrorOneOf8 | CompleteModelErrorOneOf9;
 
 /**
  * 
@@ -169,8 +206,13 @@ export const CompleteModelErrorOneOfTypeEnum = {
     FlaggedContent: 'flaggedContent',
     BodyParsingError: 'bodyParsingError',
     QueryOrPathParsingError: 'queryOrPathParsingError',
+    Failed: 'failed',
+    ModelDoesNotSupportGuidance: 'modelDoesNotSupportGuidance',
+    NoRagDocumentsFound: 'noRagDocumentsFound',
+    RagRequiresAutoTemplating: 'ragRequiresAutoTemplating',
     UnknownBaseModel: 'unknownBaseModel',
     UnknownModelAdapter: 'unknownModelAdapter',
+    UnknownRagCollection: 'unknownRagCollection',
     UnprocessableContent: 'unprocessableContent'
 } as const;
 
@@ -206,13 +248,45 @@ export const CompleteModelErrorOneOf1TypeEnum = {
     BodyParsingError: 'bodyParsingError',
     FlaggedContent: 'flaggedContent',
     QueryOrPathParsingError: 'queryOrPathParsingError',
+    Failed: 'failed',
+    ModelDoesNotSupportGuidance: 'modelDoesNotSupportGuidance',
+    NoRagDocumentsFound: 'noRagDocumentsFound',
+    RagRequiresAutoTemplating: 'ragRequiresAutoTemplating',
     UnknownBaseModel: 'unknownBaseModel',
     UnknownModelAdapter: 'unknownModelAdapter',
+    UnknownRagCollection: 'unknownRagCollection',
     UnprocessableContent: 'unprocessableContent',
+    ModelIncapableOfFineTuning: 'modelIncapableOfFineTuning',
     NanLoss: 'nanLoss'
 } as const;
 
 export type CompleteModelErrorOneOf1TypeEnum = typeof CompleteModelErrorOneOf1TypeEnum[keyof typeof CompleteModelErrorOneOf1TypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface CompleteModelErrorOneOf10
+ */
+export interface CompleteModelErrorOneOf10 {
+    /**
+     * 
+     * @type {string}
+     * @memberof CompleteModelErrorOneOf10
+     */
+    'message': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CompleteModelErrorOneOf10
+     */
+    'type': CompleteModelErrorOneOf10TypeEnum;
+}
+
+export const CompleteModelErrorOneOf10TypeEnum = {
+    UnprocessableContent: 'unprocessableContent'
+} as const;
+
+export type CompleteModelErrorOneOf10TypeEnum = typeof CompleteModelErrorOneOf10TypeEnum[keyof typeof CompleteModelErrorOneOf10TypeEnum];
 
 /**
  * 
@@ -286,7 +360,7 @@ export interface CompleteModelErrorOneOf3 {
 }
 
 export const CompleteModelErrorOneOf3TypeEnum = {
-    UnknownBaseModel: 'unknownBaseModel'
+    Failed: 'failed'
 } as const;
 
 export type CompleteModelErrorOneOf3TypeEnum = typeof CompleteModelErrorOneOf3TypeEnum[keyof typeof CompleteModelErrorOneOf3TypeEnum];
@@ -312,7 +386,7 @@ export interface CompleteModelErrorOneOf4 {
 }
 
 export const CompleteModelErrorOneOf4TypeEnum = {
-    UnknownModelAdapter: 'unknownModelAdapter'
+    ModelDoesNotSupportGuidance: 'modelDoesNotSupportGuidance'
 } as const;
 
 export type CompleteModelErrorOneOf4TypeEnum = typeof CompleteModelErrorOneOf4TypeEnum[keyof typeof CompleteModelErrorOneOf4TypeEnum];
@@ -338,10 +412,114 @@ export interface CompleteModelErrorOneOf5 {
 }
 
 export const CompleteModelErrorOneOf5TypeEnum = {
-    UnprocessableContent: 'unprocessableContent'
+    NoRagDocumentsFound: 'noRagDocumentsFound'
 } as const;
 
 export type CompleteModelErrorOneOf5TypeEnum = typeof CompleteModelErrorOneOf5TypeEnum[keyof typeof CompleteModelErrorOneOf5TypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface CompleteModelErrorOneOf6
+ */
+export interface CompleteModelErrorOneOf6 {
+    /**
+     * 
+     * @type {string}
+     * @memberof CompleteModelErrorOneOf6
+     */
+    'message': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CompleteModelErrorOneOf6
+     */
+    'type': CompleteModelErrorOneOf6TypeEnum;
+}
+
+export const CompleteModelErrorOneOf6TypeEnum = {
+    RagRequiresAutoTemplating: 'ragRequiresAutoTemplating'
+} as const;
+
+export type CompleteModelErrorOneOf6TypeEnum = typeof CompleteModelErrorOneOf6TypeEnum[keyof typeof CompleteModelErrorOneOf6TypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface CompleteModelErrorOneOf7
+ */
+export interface CompleteModelErrorOneOf7 {
+    /**
+     * 
+     * @type {string}
+     * @memberof CompleteModelErrorOneOf7
+     */
+    'message': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CompleteModelErrorOneOf7
+     */
+    'type': CompleteModelErrorOneOf7TypeEnum;
+}
+
+export const CompleteModelErrorOneOf7TypeEnum = {
+    UnknownBaseModel: 'unknownBaseModel'
+} as const;
+
+export type CompleteModelErrorOneOf7TypeEnum = typeof CompleteModelErrorOneOf7TypeEnum[keyof typeof CompleteModelErrorOneOf7TypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface CompleteModelErrorOneOf8
+ */
+export interface CompleteModelErrorOneOf8 {
+    /**
+     * 
+     * @type {string}
+     * @memberof CompleteModelErrorOneOf8
+     */
+    'message': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CompleteModelErrorOneOf8
+     */
+    'type': CompleteModelErrorOneOf8TypeEnum;
+}
+
+export const CompleteModelErrorOneOf8TypeEnum = {
+    UnknownModelAdapter: 'unknownModelAdapter'
+} as const;
+
+export type CompleteModelErrorOneOf8TypeEnum = typeof CompleteModelErrorOneOf8TypeEnum[keyof typeof CompleteModelErrorOneOf8TypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface CompleteModelErrorOneOf9
+ */
+export interface CompleteModelErrorOneOf9 {
+    /**
+     * 
+     * @type {string}
+     * @memberof CompleteModelErrorOneOf9
+     */
+    'message': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CompleteModelErrorOneOf9
+     */
+    'type': CompleteModelErrorOneOf9TypeEnum;
+}
+
+export const CompleteModelErrorOneOf9TypeEnum = {
+    UnknownRagCollection: 'unknownRagCollection'
+} as const;
+
+export type CompleteModelErrorOneOf9TypeEnum = typeof CompleteModelErrorOneOf9TypeEnum[keyof typeof CompleteModelErrorOneOf9TypeEnum];
 
 /**
  * 
@@ -591,7 +769,7 @@ export interface FineTuneModelBodyParamsSamplesInnerInputsAnyOfInner {
  * @type FineTuneModelError
  * @export
  */
-export type FineTuneModelError = CompleteModelErrorOneOf | CompleteModelErrorOneOf1 | CompleteModelErrorOneOf2 | CompleteModelErrorOneOf4 | CompleteModelErrorOneOf5 | FineTuneModelErrorOneOf;
+export type FineTuneModelError = CompleteModelErrorOneOf | CompleteModelErrorOneOf1 | CompleteModelErrorOneOf10 | CompleteModelErrorOneOf2 | CompleteModelErrorOneOf8 | FineTuneModelErrorOneOf | FineTuneModelErrorOneOf1;
 
 /**
  * 
@@ -614,10 +792,36 @@ export interface FineTuneModelErrorOneOf {
 }
 
 export const FineTuneModelErrorOneOfTypeEnum = {
-    NanLoss: 'nanLoss'
+    ModelIncapableOfFineTuning: 'modelIncapableOfFineTuning'
 } as const;
 
 export type FineTuneModelErrorOneOfTypeEnum = typeof FineTuneModelErrorOneOfTypeEnum[keyof typeof FineTuneModelErrorOneOfTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface FineTuneModelErrorOneOf1
+ */
+export interface FineTuneModelErrorOneOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof FineTuneModelErrorOneOf1
+     */
+    'message': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FineTuneModelErrorOneOf1
+     */
+    'type': FineTuneModelErrorOneOf1TypeEnum;
+}
+
+export const FineTuneModelErrorOneOf1TypeEnum = {
+    NanLoss: 'nanLoss'
+} as const;
+
+export type FineTuneModelErrorOneOf1TypeEnum = typeof FineTuneModelErrorOneOf1TypeEnum[keyof typeof FineTuneModelErrorOneOf1TypeEnum];
 
 /**
  * 
@@ -896,7 +1100,7 @@ export type ModelAdapterTypeEnum = typeof ModelAdapterTypeEnum[keyof typeof Mode
 export const EmbeddingsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Generates embeddings with the given embeddings model.
+         * Generates normalized embeddings with the given embeddings model.
          * @summary Generate embeddings
          * @param {GenerateEmbeddingSlugEnum} slug 
          * @param {string} xGradientWorkspaceId 
@@ -998,7 +1202,7 @@ export const EmbeddingsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = EmbeddingsApiAxiosParamCreator(configuration)
     return {
         /**
-         * Generates embeddings with the given embeddings model.
+         * Generates normalized embeddings with the given embeddings model.
          * @summary Generate embeddings
          * @param {GenerateEmbeddingSlugEnum} slug 
          * @param {string} xGradientWorkspaceId 
@@ -1032,7 +1236,7 @@ export const EmbeddingsApiFactory = function (configuration?: Configuration, bas
     const localVarFp = EmbeddingsApiFp(configuration)
     return {
         /**
-         * Generates embeddings with the given embeddings model.
+         * Generates normalized embeddings with the given embeddings model.
          * @summary Generate embeddings
          * @param {EmbeddingsApiGenerateEmbeddingRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1104,7 +1308,7 @@ export interface EmbeddingsApiListEmbeddingsRequest {
  */
 export class EmbeddingsApi extends BaseAPI {
     /**
-     * Generates embeddings with the given embeddings model.
+     * Generates normalized embeddings with the given embeddings model.
      * @summary Generate embeddings
      * @param {EmbeddingsApiGenerateEmbeddingRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1386,11 +1590,12 @@ export const ModelsApiAxiosParamCreator = function (configuration?: Configuratio
          * Lists the currently available models in the selected workspace and provides basic information, such as the model name, ID and whether it is a base or fine-tuned model.
          * @summary List available models
          * @param {string} xGradientWorkspaceId 
+         * @param {ListModelsCapabilityEnum} [capability] 
          * @param {boolean | null} [onlyBase] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listModels: async (xGradientWorkspaceId: string, onlyBase?: boolean | null, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listModels: async (xGradientWorkspaceId: string, capability?: ListModelsCapabilityEnum, onlyBase?: boolean | null, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'xGradientWorkspaceId' is not null or undefined
             assertParamExists('listModels', 'xGradientWorkspaceId', xGradientWorkspaceId)
             const localVarPath = `/models`;
@@ -1408,6 +1613,10 @@ export const ModelsApiAxiosParamCreator = function (configuration?: Configuratio
             // authentication AccessToken required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (capability !== undefined) {
+                localVarQueryParameter['capability'] = capability;
+            }
 
             if (onlyBase !== undefined) {
                 localVarQueryParameter['onlyBase'] = onlyBase;
@@ -1504,12 +1713,13 @@ export const ModelsApiFp = function(configuration?: Configuration) {
          * Lists the currently available models in the selected workspace and provides basic information, such as the model name, ID and whether it is a base or fine-tuned model.
          * @summary List available models
          * @param {string} xGradientWorkspaceId 
+         * @param {ListModelsCapabilityEnum} [capability] 
          * @param {boolean | null} [onlyBase] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listModels(xGradientWorkspaceId: string, onlyBase?: boolean | null, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListModelsSuccess>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listModels(xGradientWorkspaceId, onlyBase, options);
+        async listModels(xGradientWorkspaceId: string, capability?: ListModelsCapabilityEnum, onlyBase?: boolean | null, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListModelsSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listModels(xGradientWorkspaceId, capability, onlyBase, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1580,7 +1790,7 @@ export const ModelsApiFactory = function (configuration?: Configuration, basePat
          * @throws {RequiredError}
          */
         listModels(requestParameters: ModelsApiListModelsRequest, options?: AxiosRequestConfig): AxiosPromise<ListModelsSuccess> {
-            return localVarFp.listModels(requestParameters.xGradientWorkspaceId, requestParameters.onlyBase, options).then((request) => request(axios, basePath));
+            return localVarFp.listModels(requestParameters.xGradientWorkspaceId, requestParameters.capability, requestParameters.onlyBase, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1719,6 +1929,13 @@ export interface ModelsApiListModelsRequest {
 
     /**
      * 
+     * @type {'complete' | 'fineTune' | 'any'}
+     * @memberof ModelsApiListModels
+     */
+    readonly capability?: ListModelsCapabilityEnum
+
+    /**
+     * 
      * @type {boolean}
      * @memberof ModelsApiListModels
      */
@@ -1801,9 +2018,18 @@ export class ModelsApi extends BaseAPI {
      * @memberof ModelsApi
      */
     public listModels(requestParameters: ModelsApiListModelsRequest, options?: AxiosRequestConfig) {
-        return ModelsApiFp(this.configuration).listModels(requestParameters.xGradientWorkspaceId, requestParameters.onlyBase, options).then((request) => request(this.axios, this.basePath));
+        return ModelsApiFp(this.configuration).listModels(requestParameters.xGradientWorkspaceId, requestParameters.capability, requestParameters.onlyBase, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
+/**
+ * @export
+ */
+export const ListModelsCapabilityEnum = {
+    Complete: 'complete',
+    FineTune: 'fineTune',
+    Any: 'any'
+} as const;
+export type ListModelsCapabilityEnum = typeof ListModelsCapabilityEnum[keyof typeof ListModelsCapabilityEnum];
 
 
