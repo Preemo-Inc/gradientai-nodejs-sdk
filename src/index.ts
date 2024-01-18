@@ -10,8 +10,10 @@ import { EmbeddingsModel } from "./embedding/embeddingsModel";
 import { getOptionalEnvValue, getRequiredEnvValue } from "./helpers/env";
 import { expectNever } from "./helpers/typeChecking";
 import { Model } from "./model/abstractModel";
-import { BaseModel } from "./model/baseModel";
+import { BaseModel, BaseModelCapability } from "./model/baseModel";
 import { ModelAdapter } from "./model/modelAdapter";
+
+export type CapabilityFilterOption = BaseModelCapability | "any";
 
 export class Gradient {
   private readonly modelsApi: ModelsApi;
@@ -26,6 +28,7 @@ export class Gradient {
       case "baseModel":
         return new BaseModel({
           apiInstance: this.modelsApi,
+          capabilities: apiModel.capabilities,
           id: apiModel.id,
           slug: apiModel.slug,
           workspaceId: this.workspaceId,
@@ -107,13 +110,16 @@ export class Gradient {
   };
 
   public readonly listModels = async <T extends boolean>({
+    capability = "any",
     onlyBase,
   }: {
+    capability?: CapabilityFilterOption;
     onlyBase: T;
   }): Promise<Array<T extends true ? BaseModel : Model>> => {
     const {
       data: { models },
     } = await this.modelsApi.listModels({
+      capability,
       onlyBase,
       xGradientWorkspaceId: this.workspaceId,
     });

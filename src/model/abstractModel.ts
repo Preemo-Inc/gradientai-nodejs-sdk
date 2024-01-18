@@ -1,5 +1,5 @@
 import { ModelsApi } from "../api";
-import { CompleteGuidance } from "./paramTypes";
+import { CompleteParams } from "./paramTypes";
 import { CompleteResponse } from "./returnTypes";
 
 export abstract class Model {
@@ -22,28 +22,25 @@ export abstract class Model {
   }
 
   public readonly complete = async ({
+    autoTemplate,
     guidance,
     maxGeneratedTokenCount,
     query,
+    rag,
     temperature,
     topK,
     topP,
-  }: {
-    guidance?: CompleteGuidance;
-    maxGeneratedTokenCount?: number;
-    query: string;
-    temperature?: number;
-    topK?: number;
-    topP?: number;
-  }): Promise<CompleteResponse> => {
+  }: CompleteParams): Promise<CompleteResponse> => {
     const {
       data: { finishReason, generatedOutput },
     } = await this.apiInstance.completeModel({
       id: this.id,
       xGradientWorkspaceId: this.workspaceId,
       completeModelBodyParams: {
+        autoTemplate,
         guidance,
         query,
+        rag,
         maxGeneratedTokenCount,
         temperature,
         topK,

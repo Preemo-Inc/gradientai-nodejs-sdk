@@ -1,13 +1,11 @@
-import {
-  EmbeddingsApi,
-  GenerateEmbeddingSlugEnum,
-  GenerateEmbeddingSuccess,
-} from "../api";
+import { EmbeddingsApi } from "../api";
+import { EmbeddingsModelSlug } from "../model/paramTypes";
+import { GenerateEmbeddingsResponse } from "../model/returnTypes";
 
 export class EmbeddingsModel {
   private readonly apiInstance: EmbeddingsApi;
 
-  public readonly slug: GenerateEmbeddingSlugEnum;
+  public readonly slug: EmbeddingsModelSlug;
   public readonly workspaceId: string;
 
   public constructor({
@@ -16,7 +14,7 @@ export class EmbeddingsModel {
     workspaceId,
   }: {
     apiInstance: EmbeddingsApi;
-    slug: GenerateEmbeddingSlugEnum;
+    slug: EmbeddingsModelSlug;
     workspaceId: string;
   }) {
     this.apiInstance = apiInstance;
@@ -28,7 +26,7 @@ export class EmbeddingsModel {
     inputs,
   }: {
     inputs: Array<{ input: string }>;
-  }): Promise<GenerateEmbeddingSuccess> => {
+  }): Promise<GenerateEmbeddingsResponse> => {
     const response = await this.apiInstance.generateEmbedding({
       xGradientWorkspaceId: this.workspaceId,
       generateEmbeddingBodyParams: { inputs },
