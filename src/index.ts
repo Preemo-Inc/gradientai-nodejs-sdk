@@ -1,4 +1,5 @@
 import {
+  BlocksApi,
   Configuration,
   EmbeddingsApi,
   GenerateEmbeddingSlugEnum,
@@ -10,14 +11,24 @@ import { EmbeddingsModel } from "./embedding/embeddingsModel";
 import { getOptionalEnvValue, getRequiredEnvValue } from "./helpers/env";
 import { expectNever } from "./helpers/typeChecking";
 import { Model } from "./model/abstractModel";
-import { BaseModel, BaseModelCapability } from "./model/baseModel";
+import { BaseModel } from "./model/baseModel";
 import { ModelAdapter } from "./model/modelAdapter";
-
-export type CapabilityFilterOption = BaseModelCapability | "any";
+import {
+  AnalyzeSentimentParams,
+  AnswerParams,
+  AnswerResult,
+  CapabilityFilterOption,
+  ExtractParams,
+  ExtractResult,
+  PersonalizeParams,
+  Sentiment,
+  SummarizeParams,
+} from "./types";
 
 export class Gradient {
   private readonly modelsApi: ModelsApi;
   private readonly embeddingsApi: EmbeddingsApi;
+  private readonly blocksApi: BlocksApi;
 
   public readonly workspaceId: string;
 
@@ -72,6 +83,7 @@ export class Gradient {
 
     this.modelsApi = new ModelsApi(configuration);
     this.embeddingsApi = new EmbeddingsApi(configuration);
+    this.blocksApi = new BlocksApi(configuration);
     this.workspaceId = workspaceId;
   }
 
@@ -156,5 +168,75 @@ export class Gradient {
     });
 
     return embeddingsModels.map(this.deserializeEmbeddingsModel);
+  };
+
+  public readonly analyzeSentiment = async ({
+    document,
+    examples,
+  }: AnalyzeSentimentParams): Promise<{ sentiment: Sentiment }> => {
+    const {
+      data: { sentiment },
+    } = await this.blocksApi.analyzeSentiment({
+      xGradientWorkspaceId: this.workspaceId,
+      analyzeSentimentBodyParams: { document, examples },
+    });
+    return { sentiment };
+  };
+
+  public readonly extract = async ({
+    document,
+    schema,
+  }: ExtractParams): Promise<ExtractResult> => {
+    const {
+      data: { entity },
+    } = await this.blocksApi.extractEntity({
+      xGradientWorkspaceId: this.workspaceId,
+      extractEntityBodyParams: { document, schema },
+    });
+    return { entity: entity as ExtractResult["entity"] };
+  };
+
+  public readonly answer = async ({
+    question,
+    source,
+  }: AnswerParams): Promise<AnswerResult> => {
+    const {
+      data: { answer, ragContext },
+    } = await this.blocksApi.generateAnswer({
+      xGradientWorkspaceId: this.workspaceId,
+      generateAnswerBodyParams: { question, source },
+    });
+    return { answer, ragContext };
+  };
+
+  public readonly personalize = async ({
+    document,
+    audienceDescription,
+  }: PersonalizeParams): Promise<{ personalizedDocument: string }> => {
+    const {
+      data: { personalizedDocument },
+    } = await this.blocksApi.personalizeDocument({
+      xGradientWorkspaceId: this.workspaceId,
+      personalizeDocumentBodyParams: { document, audienceDescription },
+    });
+    return { personalizedDocument };
+  };
+
+  public readonly summarize = async ({
+    document,
+    examples,
+    length,
+  }: SummarizeParams): Promise<{ summary: string }> => {
+    const {
+      data: { summary },
+    } = await this.blocksApi.summarizeDocument({
+      xGradientWorkspaceId: this.workspaceId,
+      summarizeDocumentBodyParams: {
+        document,
+        length,
+        examples: examples ?? [],
+      },
+    });
+    return { summary };
   };
 }

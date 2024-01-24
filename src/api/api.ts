@@ -29,6 +29,88 @@ import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError } from './base';
 /**
  * 
  * @export
+ * @interface AnalyzeSentimentBodyParams
+ */
+export interface AnalyzeSentimentBodyParams {
+    /**
+     * The document that will be analyzed to determine the sentiment.
+     * @type {string}
+     * @memberof AnalyzeSentimentBodyParams
+     */
+    'document': string;
+    /**
+     * Example pairs of documents and sentiments.
+     * @type {Array<AnalyzeSentimentBodyParamsExamplesInner>}
+     * @memberof AnalyzeSentimentBodyParams
+     */
+    'examples': Array<AnalyzeSentimentBodyParamsExamplesInner>;
+}
+/**
+ * 
+ * @export
+ * @interface AnalyzeSentimentBodyParamsExamplesInner
+ */
+export interface AnalyzeSentimentBodyParamsExamplesInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof AnalyzeSentimentBodyParamsExamplesInner
+     */
+    'document': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AnalyzeSentimentBodyParamsExamplesInner
+     */
+    'sentiment': AnalyzeSentimentBodyParamsExamplesInnerSentimentEnum;
+}
+
+export const AnalyzeSentimentBodyParamsExamplesInnerSentimentEnum = {
+    Negative: 'negative',
+    Neutral: 'neutral',
+    Positive: 'positive'
+} as const;
+
+export type AnalyzeSentimentBodyParamsExamplesInnerSentimentEnum = typeof AnalyzeSentimentBodyParamsExamplesInnerSentimentEnum[keyof typeof AnalyzeSentimentBodyParamsExamplesInnerSentimentEnum];
+
+/**
+ * 
+ * @export
+ * @interface AnalyzeSentimentError
+ */
+export interface AnalyzeSentimentError {
+    /**
+     * 
+     * @type {string}
+     * @memberof AnalyzeSentimentError
+     */
+    'message': string;
+}
+/**
+ * 
+ * @export
+ * @interface AnalyzeSentimentSuccess
+ */
+export interface AnalyzeSentimentSuccess {
+    /**
+     * 
+     * @type {string}
+     * @memberof AnalyzeSentimentSuccess
+     */
+    'sentiment': AnalyzeSentimentSuccessSentimentEnum;
+}
+
+export const AnalyzeSentimentSuccessSentimentEnum = {
+    Negative: 'negative',
+    Neutral: 'neutral',
+    Positive: 'positive'
+} as const;
+
+export type AnalyzeSentimentSuccessSentimentEnum = typeof AnalyzeSentimentSuccessSentimentEnum[keyof typeof AnalyzeSentimentSuccessSentimentEnum];
+
+/**
+ * 
+ * @export
  * @interface BaseModel
  */
 export interface BaseModel {
@@ -691,6 +773,86 @@ export interface DeleteModelError {
 /**
  * 
  * @export
+ * @interface ExtractEntityBodyParams
+ */
+export interface ExtractEntityBodyParams {
+    /**
+     * The document from which to extract data.
+     * @type {string}
+     * @memberof ExtractEntityBodyParams
+     */
+    'document': string;
+    /**
+     * The expected schema of the entity result.
+     * @type {{ [key: string]: ExtractEntityBodyParamsSchemaValue; }}
+     * @memberof ExtractEntityBodyParams
+     */
+    'schema': { [key: string]: ExtractEntityBodyParamsSchemaValue; };
+}
+/**
+ * 
+ * @export
+ * @interface ExtractEntityBodyParamsSchemaValue
+ */
+export interface ExtractEntityBodyParamsSchemaValue {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ExtractEntityBodyParamsSchemaValue
+     */
+    'required'?: boolean | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExtractEntityBodyParamsSchemaValue
+     */
+    'type': ExtractEntityBodyParamsSchemaValueTypeEnum;
+}
+
+export const ExtractEntityBodyParamsSchemaValueTypeEnum = {
+    Boolean: 'boolean',
+    Number: 'number',
+    String: 'string'
+} as const;
+
+export type ExtractEntityBodyParamsSchemaValueTypeEnum = typeof ExtractEntityBodyParamsSchemaValueTypeEnum[keyof typeof ExtractEntityBodyParamsSchemaValueTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface ExtractEntityError
+ */
+export interface ExtractEntityError {
+    /**
+     * 
+     * @type {string}
+     * @memberof ExtractEntityError
+     */
+    'message': string;
+}
+/**
+ * 
+ * @export
+ * @interface ExtractEntitySuccess
+ */
+export interface ExtractEntitySuccess {
+    /**
+     * 
+     * @type {{ [key: string]: ExtractEntitySuccessEntityValue; }}
+     * @memberof ExtractEntitySuccess
+     */
+    'entity': { [key: string]: ExtractEntitySuccessEntityValue; };
+}
+/**
+ * 
+ * @export
+ * @interface ExtractEntitySuccessEntityValue
+ */
+export interface ExtractEntitySuccessEntityValue {
+}
+/**
+ * 
+ * @export
  * @interface FineTuneModelBodyParams
  */
 export interface FineTuneModelBodyParams {
@@ -841,6 +1003,141 @@ export interface FineTuneModelSuccess {
      * @memberof FineTuneModelSuccess
      */
     'sumLoss': number;
+}
+/**
+ * 
+ * @export
+ * @interface GenerateAnswerBodyParams
+ */
+export interface GenerateAnswerBodyParams {
+    /**
+     * 
+     * @type {string}
+     * @memberof GenerateAnswerBodyParams
+     */
+    'question': string;
+    /**
+     * 
+     * @type {GenerateAnswerBodyParamsSource}
+     * @memberof GenerateAnswerBodyParams
+     */
+    'source': GenerateAnswerBodyParamsSource;
+}
+/**
+ * @type GenerateAnswerBodyParamsSource
+ * @export
+ */
+export type GenerateAnswerBodyParamsSource = GenerateAnswerBodyParamsSourceOneOf | GenerateAnswerBodyParamsSourceOneOf1;
+
+/**
+ * The reference RAG that must be used to answer the question.
+ * @export
+ * @interface GenerateAnswerBodyParamsSourceOneOf
+ */
+export interface GenerateAnswerBodyParamsSourceOneOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof GenerateAnswerBodyParamsSourceOneOf
+     */
+    'collectionId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GenerateAnswerBodyParamsSourceOneOf
+     */
+    'type': GenerateAnswerBodyParamsSourceOneOfTypeEnum;
+}
+
+export const GenerateAnswerBodyParamsSourceOneOfTypeEnum = {
+    Rag: 'rag'
+} as const;
+
+export type GenerateAnswerBodyParamsSourceOneOfTypeEnum = typeof GenerateAnswerBodyParamsSourceOneOfTypeEnum[keyof typeof GenerateAnswerBodyParamsSourceOneOfTypeEnum];
+
+/**
+ * The document that must be used to answer the question.
+ * @export
+ * @interface GenerateAnswerBodyParamsSourceOneOf1
+ */
+export interface GenerateAnswerBodyParamsSourceOneOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof GenerateAnswerBodyParamsSourceOneOf1
+     */
+    'type': GenerateAnswerBodyParamsSourceOneOf1TypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof GenerateAnswerBodyParamsSourceOneOf1
+     */
+    'value': string;
+}
+
+export const GenerateAnswerBodyParamsSourceOneOf1TypeEnum = {
+    Document: 'document'
+} as const;
+
+export type GenerateAnswerBodyParamsSourceOneOf1TypeEnum = typeof GenerateAnswerBodyParamsSourceOneOf1TypeEnum[keyof typeof GenerateAnswerBodyParamsSourceOneOf1TypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface GenerateAnswerError
+ */
+export interface GenerateAnswerError {
+    /**
+     * 
+     * @type {string}
+     * @memberof GenerateAnswerError
+     */
+    'message': string;
+}
+/**
+ * 
+ * @export
+ * @interface GenerateAnswerSuccess
+ */
+export interface GenerateAnswerSuccess {
+    /**
+     * 
+     * @type {string}
+     * @memberof GenerateAnswerSuccess
+     */
+    'answer': string;
+    /**
+     * 
+     * @type {GenerateAnswerSuccessRagContext}
+     * @memberof GenerateAnswerSuccess
+     */
+    'ragContext'?: GenerateAnswerSuccessRagContext;
+}
+/**
+ * 
+ * @export
+ * @interface GenerateAnswerSuccessRagContext
+ */
+export interface GenerateAnswerSuccessRagContext {
+    /**
+     * 
+     * @type {Array<GenerateAnswerSuccessRagContextDocumentsInner>}
+     * @memberof GenerateAnswerSuccessRagContext
+     */
+    'documents': Array<GenerateAnswerSuccessRagContextDocumentsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface GenerateAnswerSuccessRagContextDocumentsInner
+ */
+export interface GenerateAnswerSuccessRagContextDocumentsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof GenerateAnswerSuccessRagContextDocumentsInner
+     */
+    'content': string;
 }
 /**
  * 
@@ -1091,6 +1388,679 @@ export const ModelAdapterTypeEnum = {
 } as const;
 
 export type ModelAdapterTypeEnum = typeof ModelAdapterTypeEnum[keyof typeof ModelAdapterTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface PersonalizeDocumentBodyParams
+ */
+export interface PersonalizeDocumentBodyParams {
+    /**
+     * The description of the audience that the document should be personalized for.
+     * @type {string}
+     * @memberof PersonalizeDocumentBodyParams
+     */
+    'audienceDescription': string;
+    /**
+     * The document that will be personalized.
+     * @type {string}
+     * @memberof PersonalizeDocumentBodyParams
+     */
+    'document': string;
+}
+/**
+ * 
+ * @export
+ * @interface PersonalizeDocumentError
+ */
+export interface PersonalizeDocumentError {
+    /**
+     * 
+     * @type {string}
+     * @memberof PersonalizeDocumentError
+     */
+    'message': string;
+}
+/**
+ * 
+ * @export
+ * @interface PersonalizeDocumentSuccess
+ */
+export interface PersonalizeDocumentSuccess {
+    /**
+     * 
+     * @type {string}
+     * @memberof PersonalizeDocumentSuccess
+     */
+    'personalizedDocument': string;
+}
+/**
+ * 
+ * @export
+ * @interface SummarizeDocumentBodyParams
+ */
+export interface SummarizeDocumentBodyParams {
+    /**
+     * The document to summarize.
+     * @type {string}
+     * @memberof SummarizeDocumentBodyParams
+     */
+    'document': string;
+    /**
+     * Examples of how to summarize documents.
+     * @type {Array<SummarizeDocumentBodyParamsExamplesInner>}
+     * @memberof SummarizeDocumentBodyParams
+     */
+    'examples': Array<SummarizeDocumentBodyParamsExamplesInner>;
+    /**
+     * Roughly how long the summary should be.
+     * @type {string}
+     * @memberof SummarizeDocumentBodyParams
+     */
+    'length'?: SummarizeDocumentBodyParamsLengthEnum;
+}
+
+export const SummarizeDocumentBodyParamsLengthEnum = {
+    Short: 'short',
+    Medium: 'medium',
+    Long: 'long'
+} as const;
+
+export type SummarizeDocumentBodyParamsLengthEnum = typeof SummarizeDocumentBodyParamsLengthEnum[keyof typeof SummarizeDocumentBodyParamsLengthEnum];
+
+/**
+ * 
+ * @export
+ * @interface SummarizeDocumentBodyParamsExamplesInner
+ */
+export interface SummarizeDocumentBodyParamsExamplesInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof SummarizeDocumentBodyParamsExamplesInner
+     */
+    'document': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SummarizeDocumentBodyParamsExamplesInner
+     */
+    'summary': string;
+}
+/**
+ * 
+ * @export
+ * @interface SummarizeDocumentError
+ */
+export interface SummarizeDocumentError {
+    /**
+     * 
+     * @type {string}
+     * @memberof SummarizeDocumentError
+     */
+    'message': string;
+}
+/**
+ * 
+ * @export
+ * @interface SummarizeDocumentSuccess
+ */
+export interface SummarizeDocumentSuccess {
+    /**
+     * 
+     * @type {string}
+     * @memberof SummarizeDocumentSuccess
+     */
+    'summary': string;
+}
+
+/**
+ * BlocksApi - axios parameter creator
+ * @export
+ */
+export const BlocksApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Analyzes text to determine the emotional tone of the message.
+         * @summary Sentiment analysis
+         * @param {string} xGradientWorkspaceId 
+         * @param {AnalyzeSentimentBodyParams} analyzeSentimentBodyParams 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        analyzeSentiment: async (xGradientWorkspaceId: string, analyzeSentimentBodyParams: AnalyzeSentimentBodyParams, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'xGradientWorkspaceId' is not null or undefined
+            assertParamExists('analyzeSentiment', 'xGradientWorkspaceId', xGradientWorkspaceId)
+            // verify required parameter 'analyzeSentimentBodyParams' is not null or undefined
+            assertParamExists('analyzeSentiment', 'analyzeSentimentBodyParams', analyzeSentimentBodyParams)
+            const localVarPath = `/blocks/analyze-sentiment`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication AccessToken required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (xGradientWorkspaceId != null) {
+                localVarHeaderParameter['x-gradient-workspace-id'] = String(xGradientWorkspaceId);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(analyzeSentimentBodyParams, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Extracts an entity from the document with the specified fields and types.
+         * @summary Entity extraction
+         * @param {string} xGradientWorkspaceId 
+         * @param {ExtractEntityBodyParams} extractEntityBodyParams 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        extractEntity: async (xGradientWorkspaceId: string, extractEntityBodyParams: ExtractEntityBodyParams, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'xGradientWorkspaceId' is not null or undefined
+            assertParamExists('extractEntity', 'xGradientWorkspaceId', xGradientWorkspaceId)
+            // verify required parameter 'extractEntityBodyParams' is not null or undefined
+            assertParamExists('extractEntity', 'extractEntityBodyParams', extractEntityBodyParams)
+            const localVarPath = `/blocks/extract`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication AccessToken required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (xGradientWorkspaceId != null) {
+                localVarHeaderParameter['x-gradient-workspace-id'] = String(xGradientWorkspaceId);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(extractEntityBodyParams, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers questions using the provided context.
+         * @summary Document question & answer
+         * @param {string} xGradientWorkspaceId 
+         * @param {GenerateAnswerBodyParams} generateAnswerBodyParams 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        generateAnswer: async (xGradientWorkspaceId: string, generateAnswerBodyParams: GenerateAnswerBodyParams, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'xGradientWorkspaceId' is not null or undefined
+            assertParamExists('generateAnswer', 'xGradientWorkspaceId', xGradientWorkspaceId)
+            // verify required parameter 'generateAnswerBodyParams' is not null or undefined
+            assertParamExists('generateAnswer', 'generateAnswerBodyParams', generateAnswerBodyParams)
+            const localVarPath = `/blocks/answer`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication AccessToken required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (xGradientWorkspaceId != null) {
+                localVarHeaderParameter['x-gradient-workspace-id'] = String(xGradientWorkspaceId);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(generateAnswerBodyParams, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Personalizes the document in a tone and style specific to the described target audience.
+         * @summary Document personalization
+         * @param {string} xGradientWorkspaceId 
+         * @param {PersonalizeDocumentBodyParams} personalizeDocumentBodyParams 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        personalizeDocument: async (xGradientWorkspaceId: string, personalizeDocumentBodyParams: PersonalizeDocumentBodyParams, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'xGradientWorkspaceId' is not null or undefined
+            assertParamExists('personalizeDocument', 'xGradientWorkspaceId', xGradientWorkspaceId)
+            // verify required parameter 'personalizeDocumentBodyParams' is not null or undefined
+            assertParamExists('personalizeDocument', 'personalizeDocumentBodyParams', personalizeDocumentBodyParams)
+            const localVarPath = `/blocks/personalize`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication AccessToken required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (xGradientWorkspaceId != null) {
+                localVarHeaderParameter['x-gradient-workspace-id'] = String(xGradientWorkspaceId);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(personalizeDocumentBodyParams, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Generates a summary of the document using the provided guidance.
+         * @summary Document summary
+         * @param {string} xGradientWorkspaceId 
+         * @param {SummarizeDocumentBodyParams} summarizeDocumentBodyParams 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        summarizeDocument: async (xGradientWorkspaceId: string, summarizeDocumentBodyParams: SummarizeDocumentBodyParams, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'xGradientWorkspaceId' is not null or undefined
+            assertParamExists('summarizeDocument', 'xGradientWorkspaceId', xGradientWorkspaceId)
+            // verify required parameter 'summarizeDocumentBodyParams' is not null or undefined
+            assertParamExists('summarizeDocument', 'summarizeDocumentBodyParams', summarizeDocumentBodyParams)
+            const localVarPath = `/blocks/summarize`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication AccessToken required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (xGradientWorkspaceId != null) {
+                localVarHeaderParameter['x-gradient-workspace-id'] = String(xGradientWorkspaceId);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(summarizeDocumentBodyParams, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * BlocksApi - functional programming interface
+ * @export
+ */
+export const BlocksApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = BlocksApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Analyzes text to determine the emotional tone of the message.
+         * @summary Sentiment analysis
+         * @param {string} xGradientWorkspaceId 
+         * @param {AnalyzeSentimentBodyParams} analyzeSentimentBodyParams 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async analyzeSentiment(xGradientWorkspaceId: string, analyzeSentimentBodyParams: AnalyzeSentimentBodyParams, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalyzeSentimentSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.analyzeSentiment(xGradientWorkspaceId, analyzeSentimentBodyParams, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Extracts an entity from the document with the specified fields and types.
+         * @summary Entity extraction
+         * @param {string} xGradientWorkspaceId 
+         * @param {ExtractEntityBodyParams} extractEntityBodyParams 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async extractEntity(xGradientWorkspaceId: string, extractEntityBodyParams: ExtractEntityBodyParams, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExtractEntitySuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.extractEntity(xGradientWorkspaceId, extractEntityBodyParams, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Answers questions using the provided context.
+         * @summary Document question & answer
+         * @param {string} xGradientWorkspaceId 
+         * @param {GenerateAnswerBodyParams} generateAnswerBodyParams 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async generateAnswer(xGradientWorkspaceId: string, generateAnswerBodyParams: GenerateAnswerBodyParams, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GenerateAnswerSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.generateAnswer(xGradientWorkspaceId, generateAnswerBodyParams, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Personalizes the document in a tone and style specific to the described target audience.
+         * @summary Document personalization
+         * @param {string} xGradientWorkspaceId 
+         * @param {PersonalizeDocumentBodyParams} personalizeDocumentBodyParams 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async personalizeDocument(xGradientWorkspaceId: string, personalizeDocumentBodyParams: PersonalizeDocumentBodyParams, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PersonalizeDocumentSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.personalizeDocument(xGradientWorkspaceId, personalizeDocumentBodyParams, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Generates a summary of the document using the provided guidance.
+         * @summary Document summary
+         * @param {string} xGradientWorkspaceId 
+         * @param {SummarizeDocumentBodyParams} summarizeDocumentBodyParams 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async summarizeDocument(xGradientWorkspaceId: string, summarizeDocumentBodyParams: SummarizeDocumentBodyParams, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SummarizeDocumentSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.summarizeDocument(xGradientWorkspaceId, summarizeDocumentBodyParams, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * BlocksApi - factory interface
+ * @export
+ */
+export const BlocksApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = BlocksApiFp(configuration)
+    return {
+        /**
+         * Analyzes text to determine the emotional tone of the message.
+         * @summary Sentiment analysis
+         * @param {BlocksApiAnalyzeSentimentRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        analyzeSentiment(requestParameters: BlocksApiAnalyzeSentimentRequest, options?: AxiosRequestConfig): AxiosPromise<AnalyzeSentimentSuccess> {
+            return localVarFp.analyzeSentiment(requestParameters.xGradientWorkspaceId, requestParameters.analyzeSentimentBodyParams, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Extracts an entity from the document with the specified fields and types.
+         * @summary Entity extraction
+         * @param {BlocksApiExtractEntityRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        extractEntity(requestParameters: BlocksApiExtractEntityRequest, options?: AxiosRequestConfig): AxiosPromise<ExtractEntitySuccess> {
+            return localVarFp.extractEntity(requestParameters.xGradientWorkspaceId, requestParameters.extractEntityBodyParams, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers questions using the provided context.
+         * @summary Document question & answer
+         * @param {BlocksApiGenerateAnswerRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        generateAnswer(requestParameters: BlocksApiGenerateAnswerRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateAnswerSuccess> {
+            return localVarFp.generateAnswer(requestParameters.xGradientWorkspaceId, requestParameters.generateAnswerBodyParams, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Personalizes the document in a tone and style specific to the described target audience.
+         * @summary Document personalization
+         * @param {BlocksApiPersonalizeDocumentRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        personalizeDocument(requestParameters: BlocksApiPersonalizeDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<PersonalizeDocumentSuccess> {
+            return localVarFp.personalizeDocument(requestParameters.xGradientWorkspaceId, requestParameters.personalizeDocumentBodyParams, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Generates a summary of the document using the provided guidance.
+         * @summary Document summary
+         * @param {BlocksApiSummarizeDocumentRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        summarizeDocument(requestParameters: BlocksApiSummarizeDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<SummarizeDocumentSuccess> {
+            return localVarFp.summarizeDocument(requestParameters.xGradientWorkspaceId, requestParameters.summarizeDocumentBodyParams, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for analyzeSentiment operation in BlocksApi.
+ * @export
+ * @interface BlocksApiAnalyzeSentimentRequest
+ */
+export interface BlocksApiAnalyzeSentimentRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlocksApiAnalyzeSentiment
+     */
+    readonly xGradientWorkspaceId: string
+
+    /**
+     * 
+     * @type {AnalyzeSentimentBodyParams}
+     * @memberof BlocksApiAnalyzeSentiment
+     */
+    readonly analyzeSentimentBodyParams: AnalyzeSentimentBodyParams
+}
+
+/**
+ * Request parameters for extractEntity operation in BlocksApi.
+ * @export
+ * @interface BlocksApiExtractEntityRequest
+ */
+export interface BlocksApiExtractEntityRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlocksApiExtractEntity
+     */
+    readonly xGradientWorkspaceId: string
+
+    /**
+     * 
+     * @type {ExtractEntityBodyParams}
+     * @memberof BlocksApiExtractEntity
+     */
+    readonly extractEntityBodyParams: ExtractEntityBodyParams
+}
+
+/**
+ * Request parameters for generateAnswer operation in BlocksApi.
+ * @export
+ * @interface BlocksApiGenerateAnswerRequest
+ */
+export interface BlocksApiGenerateAnswerRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlocksApiGenerateAnswer
+     */
+    readonly xGradientWorkspaceId: string
+
+    /**
+     * 
+     * @type {GenerateAnswerBodyParams}
+     * @memberof BlocksApiGenerateAnswer
+     */
+    readonly generateAnswerBodyParams: GenerateAnswerBodyParams
+}
+
+/**
+ * Request parameters for personalizeDocument operation in BlocksApi.
+ * @export
+ * @interface BlocksApiPersonalizeDocumentRequest
+ */
+export interface BlocksApiPersonalizeDocumentRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlocksApiPersonalizeDocument
+     */
+    readonly xGradientWorkspaceId: string
+
+    /**
+     * 
+     * @type {PersonalizeDocumentBodyParams}
+     * @memberof BlocksApiPersonalizeDocument
+     */
+    readonly personalizeDocumentBodyParams: PersonalizeDocumentBodyParams
+}
+
+/**
+ * Request parameters for summarizeDocument operation in BlocksApi.
+ * @export
+ * @interface BlocksApiSummarizeDocumentRequest
+ */
+export interface BlocksApiSummarizeDocumentRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlocksApiSummarizeDocument
+     */
+    readonly xGradientWorkspaceId: string
+
+    /**
+     * 
+     * @type {SummarizeDocumentBodyParams}
+     * @memberof BlocksApiSummarizeDocument
+     */
+    readonly summarizeDocumentBodyParams: SummarizeDocumentBodyParams
+}
+
+/**
+ * BlocksApi - object-oriented interface
+ * @export
+ * @class BlocksApi
+ * @extends {BaseAPI}
+ */
+export class BlocksApi extends BaseAPI {
+    /**
+     * Analyzes text to determine the emotional tone of the message.
+     * @summary Sentiment analysis
+     * @param {BlocksApiAnalyzeSentimentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BlocksApi
+     */
+    public analyzeSentiment(requestParameters: BlocksApiAnalyzeSentimentRequest, options?: AxiosRequestConfig) {
+        return BlocksApiFp(this.configuration).analyzeSentiment(requestParameters.xGradientWorkspaceId, requestParameters.analyzeSentimentBodyParams, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Extracts an entity from the document with the specified fields and types.
+     * @summary Entity extraction
+     * @param {BlocksApiExtractEntityRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BlocksApi
+     */
+    public extractEntity(requestParameters: BlocksApiExtractEntityRequest, options?: AxiosRequestConfig) {
+        return BlocksApiFp(this.configuration).extractEntity(requestParameters.xGradientWorkspaceId, requestParameters.extractEntityBodyParams, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers questions using the provided context.
+     * @summary Document question & answer
+     * @param {BlocksApiGenerateAnswerRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BlocksApi
+     */
+    public generateAnswer(requestParameters: BlocksApiGenerateAnswerRequest, options?: AxiosRequestConfig) {
+        return BlocksApiFp(this.configuration).generateAnswer(requestParameters.xGradientWorkspaceId, requestParameters.generateAnswerBodyParams, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Personalizes the document in a tone and style specific to the described target audience.
+     * @summary Document personalization
+     * @param {BlocksApiPersonalizeDocumentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BlocksApi
+     */
+    public personalizeDocument(requestParameters: BlocksApiPersonalizeDocumentRequest, options?: AxiosRequestConfig) {
+        return BlocksApiFp(this.configuration).personalizeDocument(requestParameters.xGradientWorkspaceId, requestParameters.personalizeDocumentBodyParams, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Generates a summary of the document using the provided guidance.
+     * @summary Document summary
+     * @param {BlocksApiSummarizeDocumentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BlocksApi
+     */
+    public summarizeDocument(requestParameters: BlocksApiSummarizeDocumentRequest, options?: AxiosRequestConfig) {
+        return BlocksApiFp(this.configuration).summarizeDocument(requestParameters.xGradientWorkspaceId, requestParameters.summarizeDocumentBodyParams, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
 
 
 /**
