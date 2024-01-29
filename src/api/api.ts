@@ -43,7 +43,7 @@ export interface AnalyzeSentimentBodyParams {
      * @type {Array<AnalyzeSentimentBodyParamsExamplesInner>}
      * @memberof AnalyzeSentimentBodyParams
      */
-    'examples': Array<AnalyzeSentimentBodyParamsExamplesInner>;
+    'examples'?: Array<AnalyzeSentimentBodyParamsExamplesInner> | null;
 }
 /**
  * 
@@ -1138,6 +1138,12 @@ export interface GenerateAnswerSuccessRagContextDocumentsInner {
      * @memberof GenerateAnswerSuccessRagContextDocumentsInner
      */
     'content': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GenerateAnswerSuccessRagContextDocumentsInner
+     */
+    'fileName': string;
 }
 /**
  * 
@@ -1451,7 +1457,7 @@ export interface SummarizeDocumentBodyParams {
      * @type {Array<SummarizeDocumentBodyParamsExamplesInner>}
      * @memberof SummarizeDocumentBodyParams
      */
-    'examples': Array<SummarizeDocumentBodyParamsExamplesInner>;
+    'examples'?: Array<SummarizeDocumentBodyParamsExamplesInner> | null;
     /**
      * Roughly how long the summary should be.
      * @type {string}

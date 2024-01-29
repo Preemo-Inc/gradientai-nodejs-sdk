@@ -4,7 +4,7 @@ export type CapabilityFilterOption = BaseModelCapability | "any";
 
 export type AnalyzeSentimentParams = {
   document: string;
-  examples: Array<{
+  examples?: Array<{
     document: string;
     sentiment: Sentiment;
   }>;
@@ -58,6 +58,7 @@ export type AnswerResult = {
   ragContext?: {
     documents: Array<{
       content: string;
+      fileName: string;
     }>;
   };
 };

@@ -234,7 +234,7 @@ export class Gradient {
       summarizeDocumentBodyParams: {
         document,
         length,
-        examples: examples ?? [],
+        examples: examples,
       },
     });
     return { summary };
