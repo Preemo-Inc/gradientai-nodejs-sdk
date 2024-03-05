@@ -1,3 +1,4 @@
+import { createReadStream } from "fs";
 import {
   BlocksApi,
   Configuration,
@@ -19,6 +20,8 @@ import {
   AnswerResult,
   CapabilityFilterOption,
   ExtractParams,
+  ExtractPdfParams,
+  ExtractPdfResult,
   ExtractResult,
   PersonalizeParams,
   Sentiment,
@@ -194,6 +197,19 @@ export class Gradient {
       extractEntityBodyParams: { document, schema },
     });
     return { entity: entity as ExtractResult["entity"] };
+  };
+
+  public readonly extractPdf = async ({
+    filepath,
+  }: ExtractPdfParams): Promise<ExtractPdfResult> => {
+    const {
+      data: { pages, text, title },
+    } = await this.blocksApi.extractPdf({
+      xGradientWorkspaceId: this.workspaceId,
+      file: createReadStream(filepath) as any,
+    });
+
+    return { pages, text, title };
   };
 
   public readonly answer = async ({
