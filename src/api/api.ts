@@ -19,6 +19,7 @@ import globalAxios from 'axios';
 // URLSearchParams not necessarily used
 // @ts-ignore
 import { URL, URLSearchParams } from 'url';
+import FormData = require("form-data");
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from './common';
@@ -853,6 +854,208 @@ export interface ExtractEntitySuccessEntityValue {
 /**
  * 
  * @export
+ * @interface ExtractPdfError
+ */
+export interface ExtractPdfError {
+    /**
+     * 
+     * @type {string}
+     * @memberof ExtractPdfError
+     */
+    'message': string;
+}
+/**
+ * 
+ * @export
+ * @interface ExtractPdfSuccess
+ */
+export interface ExtractPdfSuccess {
+    /**
+     * 
+     * @type {Array<ExtractPdfSuccessPagesInner>}
+     * @memberof ExtractPdfSuccess
+     */
+    'pages': Array<ExtractPdfSuccessPagesInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExtractPdfSuccess
+     */
+    'text': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExtractPdfSuccess
+     */
+    'title': string | null;
+}
+/**
+ * 
+ * @export
+ * @interface ExtractPdfSuccessPagesInner
+ */
+export interface ExtractPdfSuccessPagesInner {
+    /**
+     * 
+     * @type {Array<ExtractPdfSuccessPagesInnerImagesInner>}
+     * @memberof ExtractPdfSuccessPagesInner
+     */
+    'images': Array<ExtractPdfSuccessPagesInnerImagesInner>;
+    /**
+     * 
+     * @type {number}
+     * @memberof ExtractPdfSuccessPagesInner
+     */
+    'pageNumber': number;
+    /**
+     * 
+     * @type {Array<ExtractPdfSuccessPagesInnerTablesInner>}
+     * @memberof ExtractPdfSuccessPagesInner
+     */
+    'tables': Array<ExtractPdfSuccessPagesInnerTablesInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExtractPdfSuccessPagesInner
+     */
+    'text': string;
+    /**
+     * 
+     * @type {Array<ExtractPdfSuccessPagesInnerTextBlocksInner>}
+     * @memberof ExtractPdfSuccessPagesInner
+     */
+    'textBlocks': Array<ExtractPdfSuccessPagesInnerTextBlocksInner>;
+}
+/**
+ * 
+ * @export
+ * @interface ExtractPdfSuccessPagesInnerImagesInner
+ */
+export interface ExtractPdfSuccessPagesInnerImagesInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof ExtractPdfSuccessPagesInnerImagesInner
+     */
+    'data': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExtractPdfSuccessPagesInnerImagesInner
+     */
+    'format': ExtractPdfSuccessPagesInnerImagesInnerFormatEnum;
+}
+
+export const ExtractPdfSuccessPagesInnerImagesInnerFormatEnum = {
+    Base64Png: 'base64-png'
+} as const;
+
+export type ExtractPdfSuccessPagesInnerImagesInnerFormatEnum = typeof ExtractPdfSuccessPagesInnerImagesInnerFormatEnum[keyof typeof ExtractPdfSuccessPagesInnerImagesInnerFormatEnum];
+
+/**
+ * 
+ * @export
+ * @interface ExtractPdfSuccessPagesInnerTablesInner
+ */
+export interface ExtractPdfSuccessPagesInnerTablesInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof ExtractPdfSuccessPagesInnerTablesInner
+     */
+    'name': string;
+    /**
+     * 
+     * @type {Array<ExtractPdfSuccessPagesInnerTablesInnerTableRowsInner>}
+     * @memberof ExtractPdfSuccessPagesInnerTablesInner
+     */
+    'tableRows': Array<ExtractPdfSuccessPagesInnerTablesInnerTableRowsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface ExtractPdfSuccessPagesInnerTablesInnerTableRowsInner
+ */
+export interface ExtractPdfSuccessPagesInnerTablesInnerTableRowsInner {
+    /**
+     * 
+     * @type {Array<ExtractPdfSuccessPagesInnerTablesInnerTableRowsInnerCellsInner>}
+     * @memberof ExtractPdfSuccessPagesInnerTablesInnerTableRowsInner
+     */
+    'cells': Array<ExtractPdfSuccessPagesInnerTablesInnerTableRowsInnerCellsInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExtractPdfSuccessPagesInnerTablesInnerTableRowsInner
+     */
+    'type': ExtractPdfSuccessPagesInnerTablesInnerTableRowsInnerTypeEnum;
+}
+
+export const ExtractPdfSuccessPagesInnerTablesInnerTableRowsInnerTypeEnum = {
+    DataRow: 'table_data_row',
+    Header: 'table_header'
+} as const;
+
+export type ExtractPdfSuccessPagesInnerTablesInnerTableRowsInnerTypeEnum = typeof ExtractPdfSuccessPagesInnerTablesInnerTableRowsInnerTypeEnum[keyof typeof ExtractPdfSuccessPagesInnerTablesInnerTableRowsInnerTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface ExtractPdfSuccessPagesInnerTablesInnerTableRowsInnerCellsInner
+ */
+export interface ExtractPdfSuccessPagesInnerTablesInnerTableRowsInnerCellsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof ExtractPdfSuccessPagesInnerTablesInnerTableRowsInnerCellsInner
+     */
+    'cellValue': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ExtractPdfSuccessPagesInnerTablesInnerTableRowsInnerCellsInner
+     */
+    'colSpan': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ExtractPdfSuccessPagesInnerTablesInnerTableRowsInnerCellsInner
+     */
+    'rowSpan': number | null;
+}
+/**
+ * 
+ * @export
+ * @interface ExtractPdfSuccessPagesInnerTextBlocksInner
+ */
+export interface ExtractPdfSuccessPagesInnerTextBlocksInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof ExtractPdfSuccessPagesInnerTextBlocksInner
+     */
+    'kind': ExtractPdfSuccessPagesInnerTextBlocksInnerKindEnum;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ExtractPdfSuccessPagesInnerTextBlocksInner
+     */
+    'texts': Array<string>;
+}
+
+export const ExtractPdfSuccessPagesInnerTextBlocksInnerKindEnum = {
+    Footer: 'footer',
+    Header: 'header',
+    SectionTitle: 'section_title',
+    Text: 'text',
+    Title: 'title'
+} as const;
+
+export type ExtractPdfSuccessPagesInnerTextBlocksInnerKindEnum = typeof ExtractPdfSuccessPagesInnerTextBlocksInnerKindEnum[keyof typeof ExtractPdfSuccessPagesInnerTextBlocksInnerKindEnum];
+
+/**
+ * 
+ * @export
  * @interface FineTuneModelBodyParams
  */
 export interface FineTuneModelBodyParams {
@@ -1621,6 +1824,58 @@ export const BlocksApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
+         * Extracts content from the PDF.
+         * @summary PDF extraction
+         * @param {string} xGradientWorkspaceId 
+         * @param {File} file 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        extractPdf: async (xGradientWorkspaceId: string, file: File, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'xGradientWorkspaceId' is not null or undefined
+            assertParamExists('extractPdf', 'xGradientWorkspaceId', xGradientWorkspaceId)
+            // verify required parameter 'file' is not null or undefined
+            assertParamExists('extractPdf', 'file', file)
+            const localVarPath = `/blocks/extract-pdf`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+            // authentication AccessToken required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (xGradientWorkspaceId != null) {
+                localVarHeaderParameter['x-gradient-workspace-id'] = String(xGradientWorkspaceId);
+            }
+
+
+            if (file !== undefined) { 
+                localVarFormParams.append('file', file as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...(localVarFormParams as any).getHeaders?.(), ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Answers questions using the provided context.
          * @summary Document question & answer
          * @param {string} xGradientWorkspaceId 
@@ -1796,6 +2051,18 @@ export const BlocksApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Extracts content from the PDF.
+         * @summary PDF extraction
+         * @param {string} xGradientWorkspaceId 
+         * @param {File} file 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async extractPdf(xGradientWorkspaceId: string, file: File, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExtractPdfSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.extractPdf(xGradientWorkspaceId, file, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Answers questions using the provided context.
          * @summary Document question & answer
          * @param {string} xGradientWorkspaceId 
@@ -1860,6 +2127,16 @@ export const BlocksApiFactory = function (configuration?: Configuration, basePat
          */
         extractEntity(requestParameters: BlocksApiExtractEntityRequest, options?: AxiosRequestConfig): AxiosPromise<ExtractEntitySuccess> {
             return localVarFp.extractEntity(requestParameters.xGradientWorkspaceId, requestParameters.extractEntityBodyParams, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Extracts content from the PDF.
+         * @summary PDF extraction
+         * @param {BlocksApiExtractPdfRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        extractPdf(requestParameters: BlocksApiExtractPdfRequest, options?: AxiosRequestConfig): AxiosPromise<ExtractPdfSuccess> {
+            return localVarFp.extractPdf(requestParameters.xGradientWorkspaceId, requestParameters.file, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers questions using the provided context.
@@ -1934,6 +2211,27 @@ export interface BlocksApiExtractEntityRequest {
      * @memberof BlocksApiExtractEntity
      */
     readonly extractEntityBodyParams: ExtractEntityBodyParams
+}
+
+/**
+ * Request parameters for extractPdf operation in BlocksApi.
+ * @export
+ * @interface BlocksApiExtractPdfRequest
+ */
+export interface BlocksApiExtractPdfRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlocksApiExtractPdf
+     */
+    readonly xGradientWorkspaceId: string
+
+    /**
+     * 
+     * @type {File}
+     * @memberof BlocksApiExtractPdf
+     */
+    readonly file: File
 }
 
 /**
@@ -2028,6 +2326,18 @@ export class BlocksApi extends BaseAPI {
      */
     public extractEntity(requestParameters: BlocksApiExtractEntityRequest, options?: AxiosRequestConfig) {
         return BlocksApiFp(this.configuration).extractEntity(requestParameters.xGradientWorkspaceId, requestParameters.extractEntityBodyParams, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Extracts content from the PDF.
+     * @summary PDF extraction
+     * @param {BlocksApiExtractPdfRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BlocksApi
+     */
+    public extractPdf(requestParameters: BlocksApiExtractPdfRequest, options?: AxiosRequestConfig) {
+        return BlocksApiFp(this.configuration).extractPdf(requestParameters.xGradientWorkspaceId, requestParameters.file, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

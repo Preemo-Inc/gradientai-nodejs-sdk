@@ -1,6 +1,6 @@
 {
   "name": "@gradientai/nodejs-sdk",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "JavaScript and TypeScript client for Gradient AI",
   "engines": {
     "node": ">=18"
@@ -51,7 +51,8 @@
     "lint": "true"
   },
   "dependencies": {
-    "axios": "0.21.4"
+    "axios": "0.21.4",
+    "form-data": "4.0.0"
   },
   "devDependencies": {
     "@types/node": "^12.11.5",

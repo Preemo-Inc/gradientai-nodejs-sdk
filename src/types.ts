@@ -22,8 +22,41 @@ export type ExtractParams = {
     }
   >;
 };
+
 export type ExtractResult = {
   entity: Record<string, string | number | boolean>;
+};
+
+export type ExtractPdfParams = {
+  filepath: string;
+};
+
+export type ExtractPdfResult = {
+  pages: Array<{
+    images: Array<{
+      data: string;
+      format: "base64-png";
+    }>;
+    pageNumber: number;
+    tables: Array<{
+      name: string;
+      tableRows: Array<{
+        cells: Array<{
+          cellValue: string;
+          colSpan: number | null;
+          rowSpan: number | null;
+        }>;
+        type: "table_data_row" | "table_header";
+      }>;
+    }>;
+    text: string;
+    textBlocks: Array<{
+      kind: "footer" | "header" | "section_title" | "text" | "title";
+      texts: Array<string>;
+    }>;
+  }>;
+  text: string;
+  title: string | null;
 };
 
 export type SummarizeParams = {
