@@ -1,3 +1,4 @@
+import axios from "axios";
 import { createReadStream } from "fs";
 import {
   BlocksApi,
@@ -84,9 +85,17 @@ export class Gradient {
       basePath: host,
     });
 
-    this.modelsApi = new ModelsApi(configuration);
-    this.embeddingsApi = new EmbeddingsApi(configuration);
-    this.blocksApi = new BlocksApi(configuration);
+    const axiosClient = axios.create({
+      maxBodyLength: Infinity,
+    });
+
+    this.modelsApi = new ModelsApi(configuration, undefined, axiosClient);
+    this.embeddingsApi = new EmbeddingsApi(
+      configuration,
+      undefined,
+      axiosClient
+    );
+    this.blocksApi = new BlocksApi(configuration, undefined, axiosClient);
     this.workspaceId = workspaceId;
   }
 
