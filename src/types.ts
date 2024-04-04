@@ -1,4 +1,5 @@
 import { BaseModelCapability } from "./model/baseModel";
+import { EmbeddingsModelSlug } from "./model/paramTypes";
 
 export type CapabilityFilterOption = BaseModelCapability | "any";
 
@@ -59,6 +60,14 @@ export type ExtractPdfResult = {
   title: string | null;
 };
 
+export type TranscribeAudioParams = {
+  filepath: string;
+};
+
+export type TranscribeAudioResult = {
+  text: string;
+};
+
 export type SummarizeParams = {
   document: string;
   examples?: Array<{
@@ -94,4 +103,14 @@ export type AnswerResult = {
       fileName: string;
     }>;
   };
+};
+
+export type GetRagCollectionParams = {
+  id: string;
+};
+
+export type CreateRagCollectionParams = {
+  filepaths?: Array<string>;
+  name: string;
+  slug: EmbeddingsModelSlug;
 };

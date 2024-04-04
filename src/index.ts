@@ -1,38 +1,53 @@
 import axios from "axios";
 import { createReadStream } from "fs";
+
+import { basename } from "path";
 import {
   BlocksApi,
   Configuration,
+  CreateRagCollectionBodyParams,
   EmbeddingsApi,
+  FilesApi,
   GenerateEmbeddingSlugEnum,
   ListEmbeddingsSuccess,
   ListModelsSuccessModelsInner,
   ModelsApi,
+  RAGApi,
 } from "./api";
 import { EmbeddingsModel } from "./embedding/embeddingsModel";
+import { FilesApiManager } from "./files/filesApiManager";
+import { IFilesApiManager } from "./files/types";
 import { getOptionalEnvValue, getRequiredEnvValue } from "./helpers/env";
-import { expectNever } from "./helpers/typeChecking";
+import { expectNever, isUndefined } from "./helpers/typeChecking";
+import { wait } from "./helpers/wait";
 import { Model } from "./model/abstractModel";
 import { BaseModel } from "./model/baseModel";
 import { ModelAdapter } from "./model/modelAdapter";
+import { RagCollection } from "./rag/ragCollection";
 import {
   AnalyzeSentimentParams,
   AnswerParams,
   AnswerResult,
   CapabilityFilterOption,
+  CreateRagCollectionParams,
   ExtractParams,
   ExtractPdfParams,
   ExtractPdfResult,
   ExtractResult,
+  GetRagCollectionParams,
   PersonalizeParams,
   Sentiment,
   SummarizeParams,
+  TranscribeAudioParams,
+  TranscribeAudioResult,
 } from "./types";
 
 export class Gradient {
-  private readonly modelsApi: ModelsApi;
-  private readonly embeddingsApi: EmbeddingsApi;
   private readonly blocksApi: BlocksApi;
+  private readonly embeddingsApi: EmbeddingsApi;
+  private readonly filesApiManager: IFilesApiManager;
+  private readonly modelsApi: ModelsApi;
+  private readonly ragApi: RAGApi;
 
   public readonly workspaceId: string;
 
@@ -89,13 +104,19 @@ export class Gradient {
       maxBodyLength: Infinity,
     });
 
-    this.modelsApi = new ModelsApi(configuration, undefined, axiosClient);
+    this.blocksApi = new BlocksApi(configuration, undefined, axiosClient);
     this.embeddingsApi = new EmbeddingsApi(
       configuration,
       undefined,
       axiosClient
     );
-    this.blocksApi = new BlocksApi(configuration, undefined, axiosClient);
+    this.filesApiManager = new FilesApiManager({
+      filesApi: new FilesApi(configuration, undefined, axiosClient),
+      workspaceId,
+    });
+    this.modelsApi = new ModelsApi(configuration, undefined, axiosClient);
+    this.ragApi = new RAGApi(configuration, undefined, axiosClient);
+
     this.workspaceId = workspaceId;
   }
 
@@ -221,6 +242,50 @@ export class Gradient {
     return { pages, text, title };
   };
 
+  public readonly transcribeAudio = async ({
+    filepath,
+  }: TranscribeAudioParams): Promise<TranscribeAudioResult> => {
+    const { id: fileId } = await this.filesApiManager.uploadFile({
+      filepath,
+      type: "audioFile",
+    });
+
+    const {
+      data: { transcriptionId },
+    } = await this.blocksApi.createAudioTranscription({
+      createAudioTranscriptionBodyParams: {
+        fileId,
+      },
+      xGradientWorkspaceId: this.workspaceId,
+    });
+
+    while (true) {
+      const { data } = await this.blocksApi.getAudioTranscription({
+        transcriptionId,
+        xGradientWorkspaceId: this.workspaceId,
+      });
+
+      switch (data.status) {
+        case "pending":
+        case "pendingCancellation":
+        case "running": {
+          await wait(1000);
+          break;
+        }
+        case "cancelled":
+        case "failed": {
+          throw new Error("Unable to get transcription");
+        }
+        case "succeeded": {
+          return { text: data.result.text };
+        }
+        default: {
+          return expectNever(data);
+        }
+      }
+    }
+  };
+
   public readonly answer = async ({
     question,
     source,
@@ -263,5 +328,56 @@ export class Gradient {
       },
     });
     return { summary };
+  };
+
+  public readonly getRagCollection = async ({
+    id,
+  }: GetRagCollectionParams): Promise<RagCollection> => {
+    
+    const ragCollection = new RagCollection({
+      filesApiManager: this.filesApiManager,
+      id,
+      ragApi: this.ragApi,
+      workspaceId: this.workspaceId,
+    });
+
+    return Promise.resolve(ragCollection);
+  };
+
+  public readonly createRagCollection = async ({
+    filepaths,
+    name,
+    slug,
+  }: CreateRagCollectionParams): Promise<RagCollection> => {
+    let files: CreateRagCollectionBodyParams["files"];
+    if (!isUndefined(filepaths)) {
+      const uploadedFiles = await this.filesApiManager.uploadFiles({
+        filepaths,
+        type: "ragUserFile",
+      });
+
+      files = uploadedFiles.files.map(({ filepath, id }) => ({
+        id,
+        name: basename(filepath),
+      }));
+    }
+
+    const {
+      data: { id },
+    } = await this.ragApi.createRagCollection({
+      createRagCollectionBodyParams: {
+        files,
+        name,
+        slug,
+      },
+      xGradientWorkspaceId: this.workspaceId,
+    });
+
+    return new RagCollection({
+      filesApiManager: this.filesApiManager,
+      id,
+      ragApi: this.ragApi,
+      workspaceId: this.workspaceId,
+    });
   };
 }

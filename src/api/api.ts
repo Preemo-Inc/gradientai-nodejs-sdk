@@ -30,6 +30,32 @@ import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError } from './base';
 /**
  * 
  * @export
+ * @interface AddFilesToRagCollectionBodyParams
+ */
+export interface AddFilesToRagCollectionBodyParams {
+    /**
+     * 
+     * @type {Array<CreateRagCollectionBodyParamsFilesInner>}
+     * @memberof AddFilesToRagCollectionBodyParams
+     */
+    'files': Array<CreateRagCollectionBodyParamsFilesInner>;
+}
+/**
+ * 
+ * @export
+ * @interface AddFilesToRagCollectionError
+ */
+export interface AddFilesToRagCollectionError {
+    /**
+     * 
+     * @type {string}
+     * @memberof AddFilesToRagCollectionError
+     */
+    'message': string;
+}
+/**
+ * 
+ * @export
  * @interface AnalyzeSentimentBodyParams
  */
 export interface AnalyzeSentimentBodyParams {
@@ -652,6 +678,45 @@ export interface CompleteModelSuccess {
 /**
  * 
  * @export
+ * @interface CreateAudioTranscriptionBodyParams
+ */
+export interface CreateAudioTranscriptionBodyParams {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateAudioTranscriptionBodyParams
+     */
+    'fileId': string;
+}
+/**
+ * 
+ * @export
+ * @interface CreateAudioTranscriptionError
+ */
+export interface CreateAudioTranscriptionError {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateAudioTranscriptionError
+     */
+    'message': string;
+}
+/**
+ * 
+ * @export
+ * @interface CreateAudioTranscriptionSuccess
+ */
+export interface CreateAudioTranscriptionSuccess {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateAudioTranscriptionSuccess
+     */
+    'transcriptionId': string;
+}
+/**
+ * 
+ * @export
  * @interface CreateModelBodyParams
  */
 export interface CreateModelBodyParams {
@@ -755,6 +820,83 @@ export interface CreateModelSuccess {
      * 
      * @type {string}
      * @memberof CreateModelSuccess
+     */
+    'id': string;
+}
+/**
+ * 
+ * @export
+ * @interface CreateRagCollectionBodyParams
+ */
+export interface CreateRagCollectionBodyParams {
+    /**
+     * 
+     * @type {Array<CreateRagCollectionBodyParamsFilesInner>}
+     * @memberof CreateRagCollectionBodyParams
+     */
+    'files'?: Array<CreateRagCollectionBodyParamsFilesInner> | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateRagCollectionBodyParams
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateRagCollectionBodyParams
+     */
+    'slug': CreateRagCollectionBodyParamsSlugEnum;
+}
+
+export const CreateRagCollectionBodyParamsSlugEnum = {
+    BgeLarge: 'bge-large'
+} as const;
+
+export type CreateRagCollectionBodyParamsSlugEnum = typeof CreateRagCollectionBodyParamsSlugEnum[keyof typeof CreateRagCollectionBodyParamsSlugEnum];
+
+/**
+ * 
+ * @export
+ * @interface CreateRagCollectionBodyParamsFilesInner
+ */
+export interface CreateRagCollectionBodyParamsFilesInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateRagCollectionBodyParamsFilesInner
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateRagCollectionBodyParamsFilesInner
+     */
+    'name': string;
+}
+/**
+ * 
+ * @export
+ * @interface CreateRagCollectionError
+ */
+export interface CreateRagCollectionError {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateRagCollectionError
+     */
+    'message': string;
+}
+/**
+ * 
+ * @export
+ * @interface CreateRagCollectionSuccess
+ */
+export interface CreateRagCollectionSuccess {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateRagCollectionSuccess
      */
     'id': string;
 }
@@ -1422,6 +1564,94 @@ export interface GenerateEmbeddingSuccessEmbeddingsInner {
 /**
  * 
  * @export
+ * @interface GetAudioTranscriptionError
+ */
+export interface GetAudioTranscriptionError {
+    /**
+     * 
+     * @type {string}
+     * @memberof GetAudioTranscriptionError
+     */
+    'message': string;
+}
+/**
+ * @type GetAudioTranscriptionSuccess
+ * @export
+ */
+export type GetAudioTranscriptionSuccess = GetAudioTranscriptionSuccessOneOf | GetAudioTranscriptionSuccessOneOf1;
+
+/**
+ * 
+ * @export
+ * @interface GetAudioTranscriptionSuccessOneOf
+ */
+export interface GetAudioTranscriptionSuccessOneOf {
+    /**
+     * 
+     * @type {any}
+     * @memberof GetAudioTranscriptionSuccessOneOf
+     */
+    'result': any | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetAudioTranscriptionSuccessOneOf
+     */
+    'status': GetAudioTranscriptionSuccessOneOfStatusEnum;
+}
+
+export const GetAudioTranscriptionSuccessOneOfStatusEnum = {
+    Cancelled: 'cancelled',
+    Failed: 'failed',
+    Pending: 'pending',
+    PendingCancellation: 'pendingCancellation',
+    Running: 'running'
+} as const;
+
+export type GetAudioTranscriptionSuccessOneOfStatusEnum = typeof GetAudioTranscriptionSuccessOneOfStatusEnum[keyof typeof GetAudioTranscriptionSuccessOneOfStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface GetAudioTranscriptionSuccessOneOf1
+ */
+export interface GetAudioTranscriptionSuccessOneOf1 {
+    /**
+     * 
+     * @type {GetAudioTranscriptionSuccessOneOf1Result}
+     * @memberof GetAudioTranscriptionSuccessOneOf1
+     */
+    'result': GetAudioTranscriptionSuccessOneOf1Result;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetAudioTranscriptionSuccessOneOf1
+     */
+    'status': GetAudioTranscriptionSuccessOneOf1StatusEnum;
+}
+
+export const GetAudioTranscriptionSuccessOneOf1StatusEnum = {
+    Succeeded: 'succeeded'
+} as const;
+
+export type GetAudioTranscriptionSuccessOneOf1StatusEnum = typeof GetAudioTranscriptionSuccessOneOf1StatusEnum[keyof typeof GetAudioTranscriptionSuccessOneOf1StatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface GetAudioTranscriptionSuccessOneOf1Result
+ */
+export interface GetAudioTranscriptionSuccessOneOf1Result {
+    /**
+     * 
+     * @type {string}
+     * @memberof GetAudioTranscriptionSuccessOneOf1Result
+     */
+    'text': string;
+}
+/**
+ * 
+ * @export
  * @interface GetModelError
  */
 export interface GetModelError {
@@ -1722,6 +1952,32 @@ export interface SummarizeDocumentSuccess {
      */
     'summary': string;
 }
+/**
+ * 
+ * @export
+ * @interface UploadFileError
+ */
+export interface UploadFileError {
+    /**
+     * 
+     * @type {string}
+     * @memberof UploadFileError
+     */
+    'message': string;
+}
+/**
+ * 
+ * @export
+ * @interface UploadFileSuccess
+ */
+export interface UploadFileSuccess {
+    /**
+     * 
+     * @type {string}
+     * @memberof UploadFileSuccess
+     */
+    'id': string;
+}
 
 /**
  * BlocksApi - axios parameter creator
@@ -1768,8 +2024,63 @@ export const BlocksApiAxiosParamCreator = function (configuration?: Configuratio
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.headers = {
+              ...localVarHeaderParameter,
+              ...headersFromBaseOptions,
+              ...options.headers,
+            };
             localVarRequestOptions.data = serializeDataIfNeeded(analyzeSentimentBodyParams, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Creates an audio transcription job.
+         * @summary Create audio transcription
+         * @param {string} xGradientWorkspaceId 
+         * @param {CreateAudioTranscriptionBodyParams} createAudioTranscriptionBodyParams 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createAudioTranscription: async (xGradientWorkspaceId: string, createAudioTranscriptionBodyParams: CreateAudioTranscriptionBodyParams, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'xGradientWorkspaceId' is not null or undefined
+            assertParamExists('createAudioTranscription', 'xGradientWorkspaceId', xGradientWorkspaceId)
+            // verify required parameter 'createAudioTranscriptionBodyParams' is not null or undefined
+            assertParamExists('createAudioTranscription', 'createAudioTranscriptionBodyParams', createAudioTranscriptionBodyParams)
+            const localVarPath = `/blocks/transcription`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication AccessToken required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (xGradientWorkspaceId != null) {
+                localVarHeaderParameter['x-gradient-workspace-id'] = String(xGradientWorkspaceId);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+              ...localVarHeaderParameter,
+              ...headersFromBaseOptions,
+              ...options.headers,
+            };
+            localVarRequestOptions.data = serializeDataIfNeeded(createAudioTranscriptionBodyParams, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1815,7 +2126,11 @@ export const BlocksApiAxiosParamCreator = function (configuration?: Configuratio
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.headers = {
+              ...localVarHeaderParameter,
+              ...headersFromBaseOptions,
+              ...options.headers,
+            };
             localVarRequestOptions.data = serializeDataIfNeeded(extractEntityBodyParams, localVarRequestOptions, configuration)
 
             return {
@@ -1858,8 +2173,12 @@ export const BlocksApiAxiosParamCreator = function (configuration?: Configuratio
             }
 
 
-            if (file !== undefined) { 
+            if (file !== undefined) {
+              if (typeof file === 'object' && file.type === 'file') {
+                localVarFormParams.append('file', (file as any).contentStream as any, { knownLength: (file as any).fileSize });
+              } else {
                 localVarFormParams.append('file', file as any);
+              }
             }
     
     
@@ -1867,7 +2186,13 @@ export const BlocksApiAxiosParamCreator = function (configuration?: Configuratio
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...(localVarFormParams as any).getHeaders?.(), ...options.headers};
+            localVarRequestOptions.headers = {
+              ...localVarHeaderParameter,
+              ...headersFromBaseOptions,
+              ...(localVarFormParams as any).getHeaders?.(),
+              ...((localVarFormParams as any).hasKnownLength() ? { 'Content-Length': (localVarFormParams as any).getLengthSync() } : {}),
+              ...options.headers,
+            };
             localVarRequestOptions.data = localVarFormParams;
 
             return {
@@ -1914,8 +2239,64 @@ export const BlocksApiAxiosParamCreator = function (configuration?: Configuratio
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.headers = {
+              ...localVarHeaderParameter,
+              ...headersFromBaseOptions,
+              ...options.headers,
+            };
             localVarRequestOptions.data = serializeDataIfNeeded(generateAnswerBodyParams, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Gets the result of the audio transcription job.
+         * @summary Get audio transcription
+         * @param {string} transcriptionId 
+         * @param {string} xGradientWorkspaceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAudioTranscription: async (transcriptionId: string, xGradientWorkspaceId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'transcriptionId' is not null or undefined
+            assertParamExists('getAudioTranscription', 'transcriptionId', transcriptionId)
+            // verify required parameter 'xGradientWorkspaceId' is not null or undefined
+            assertParamExists('getAudioTranscription', 'xGradientWorkspaceId', xGradientWorkspaceId)
+            const localVarPath = `/blocks/transcription`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication AccessToken required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (transcriptionId !== undefined) {
+                localVarQueryParameter['transcriptionId'] = transcriptionId;
+            }
+
+            if (xGradientWorkspaceId != null) {
+                localVarHeaderParameter['x-gradient-workspace-id'] = String(xGradientWorkspaceId);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+              ...localVarHeaderParameter,
+              ...headersFromBaseOptions,
+              ...options.headers,
+            };
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1961,7 +2342,11 @@ export const BlocksApiAxiosParamCreator = function (configuration?: Configuratio
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.headers = {
+              ...localVarHeaderParameter,
+              ...headersFromBaseOptions,
+              ...options.headers,
+            };
             localVarRequestOptions.data = serializeDataIfNeeded(personalizeDocumentBodyParams, localVarRequestOptions, configuration)
 
             return {
@@ -2008,7 +2393,11 @@ export const BlocksApiAxiosParamCreator = function (configuration?: Configuratio
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.headers = {
+              ...localVarHeaderParameter,
+              ...headersFromBaseOptions,
+              ...options.headers,
+            };
             localVarRequestOptions.data = serializeDataIfNeeded(summarizeDocumentBodyParams, localVarRequestOptions, configuration)
 
             return {
@@ -2036,6 +2425,18 @@ export const BlocksApiFp = function(configuration?: Configuration) {
          */
         async analyzeSentiment(xGradientWorkspaceId: string, analyzeSentimentBodyParams: AnalyzeSentimentBodyParams, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalyzeSentimentSuccess>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.analyzeSentiment(xGradientWorkspaceId, analyzeSentimentBodyParams, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Creates an audio transcription job.
+         * @summary Create audio transcription
+         * @param {string} xGradientWorkspaceId 
+         * @param {CreateAudioTranscriptionBodyParams} createAudioTranscriptionBodyParams 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createAudioTranscription(xGradientWorkspaceId: string, createAudioTranscriptionBodyParams: CreateAudioTranscriptionBodyParams, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateAudioTranscriptionSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createAudioTranscription(xGradientWorkspaceId, createAudioTranscriptionBodyParams, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2072,6 +2473,18 @@ export const BlocksApiFp = function(configuration?: Configuration) {
          */
         async generateAnswer(xGradientWorkspaceId: string, generateAnswerBodyParams: GenerateAnswerBodyParams, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GenerateAnswerSuccess>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.generateAnswer(xGradientWorkspaceId, generateAnswerBodyParams, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Gets the result of the audio transcription job.
+         * @summary Get audio transcription
+         * @param {string} transcriptionId 
+         * @param {string} xGradientWorkspaceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAudioTranscription(transcriptionId: string, xGradientWorkspaceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAudioTranscriptionSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAudioTranscription(transcriptionId, xGradientWorkspaceId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2119,6 +2532,16 @@ export const BlocksApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.analyzeSentiment(requestParameters.xGradientWorkspaceId, requestParameters.analyzeSentimentBodyParams, options).then((request) => request(axios, basePath));
         },
         /**
+         * Creates an audio transcription job.
+         * @summary Create audio transcription
+         * @param {BlocksApiCreateAudioTranscriptionRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createAudioTranscription(requestParameters: BlocksApiCreateAudioTranscriptionRequest, options?: AxiosRequestConfig): AxiosPromise<CreateAudioTranscriptionSuccess> {
+            return localVarFp.createAudioTranscription(requestParameters.xGradientWorkspaceId, requestParameters.createAudioTranscriptionBodyParams, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Extracts an entity from the document with the specified fields and types.
          * @summary Entity extraction
          * @param {BlocksApiExtractEntityRequest} requestParameters Request parameters.
@@ -2147,6 +2570,16 @@ export const BlocksApiFactory = function (configuration?: Configuration, basePat
          */
         generateAnswer(requestParameters: BlocksApiGenerateAnswerRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateAnswerSuccess> {
             return localVarFp.generateAnswer(requestParameters.xGradientWorkspaceId, requestParameters.generateAnswerBodyParams, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Gets the result of the audio transcription job.
+         * @summary Get audio transcription
+         * @param {BlocksApiGetAudioTranscriptionRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAudioTranscription(requestParameters: BlocksApiGetAudioTranscriptionRequest, options?: AxiosRequestConfig): AxiosPromise<GetAudioTranscriptionSuccess> {
+            return localVarFp.getAudioTranscription(requestParameters.transcriptionId, requestParameters.xGradientWorkspaceId, options).then((request) => request(axios, basePath));
         },
         /**
          * Personalizes the document in a tone and style specific to the described target audience.
@@ -2190,6 +2623,27 @@ export interface BlocksApiAnalyzeSentimentRequest {
      * @memberof BlocksApiAnalyzeSentiment
      */
     readonly analyzeSentimentBodyParams: AnalyzeSentimentBodyParams
+}
+
+/**
+ * Request parameters for createAudioTranscription operation in BlocksApi.
+ * @export
+ * @interface BlocksApiCreateAudioTranscriptionRequest
+ */
+export interface BlocksApiCreateAudioTranscriptionRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlocksApiCreateAudioTranscription
+     */
+    readonly xGradientWorkspaceId: string
+
+    /**
+     * 
+     * @type {CreateAudioTranscriptionBodyParams}
+     * @memberof BlocksApiCreateAudioTranscription
+     */
+    readonly createAudioTranscriptionBodyParams: CreateAudioTranscriptionBodyParams
 }
 
 /**
@@ -2256,6 +2710,27 @@ export interface BlocksApiGenerateAnswerRequest {
 }
 
 /**
+ * Request parameters for getAudioTranscription operation in BlocksApi.
+ * @export
+ * @interface BlocksApiGetAudioTranscriptionRequest
+ */
+export interface BlocksApiGetAudioTranscriptionRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlocksApiGetAudioTranscription
+     */
+    readonly transcriptionId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof BlocksApiGetAudioTranscription
+     */
+    readonly xGradientWorkspaceId: string
+}
+
+/**
  * Request parameters for personalizeDocument operation in BlocksApi.
  * @export
  * @interface BlocksApiPersonalizeDocumentRequest
@@ -2317,6 +2792,18 @@ export class BlocksApi extends BaseAPI {
     }
 
     /**
+     * Creates an audio transcription job.
+     * @summary Create audio transcription
+     * @param {BlocksApiCreateAudioTranscriptionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BlocksApi
+     */
+    public createAudioTranscription(requestParameters: BlocksApiCreateAudioTranscriptionRequest, options?: AxiosRequestConfig) {
+        return BlocksApiFp(this.configuration).createAudioTranscription(requestParameters.xGradientWorkspaceId, requestParameters.createAudioTranscriptionBodyParams, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Extracts an entity from the document with the specified fields and types.
      * @summary Entity extraction
      * @param {BlocksApiExtractEntityRequest} requestParameters Request parameters.
@@ -2350,6 +2837,18 @@ export class BlocksApi extends BaseAPI {
      */
     public generateAnswer(requestParameters: BlocksApiGenerateAnswerRequest, options?: AxiosRequestConfig) {
         return BlocksApiFp(this.configuration).generateAnswer(requestParameters.xGradientWorkspaceId, requestParameters.generateAnswerBodyParams, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Gets the result of the audio transcription job.
+     * @summary Get audio transcription
+     * @param {BlocksApiGetAudioTranscriptionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BlocksApi
+     */
+    public getAudioTranscription(requestParameters: BlocksApiGetAudioTranscriptionRequest, options?: AxiosRequestConfig) {
+        return BlocksApiFp(this.configuration).getAudioTranscription(requestParameters.transcriptionId, requestParameters.xGradientWorkspaceId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2428,7 +2927,11 @@ export const EmbeddingsApiAxiosParamCreator = function (configuration?: Configur
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.headers = {
+              ...localVarHeaderParameter,
+              ...headersFromBaseOptions,
+              ...options.headers,
+            };
             localVarRequestOptions.data = serializeDataIfNeeded(generateEmbeddingBodyParams, localVarRequestOptions, configuration)
 
             return {
@@ -2470,7 +2973,11 @@ export const EmbeddingsApiAxiosParamCreator = function (configuration?: Configur
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.headers = {
+              ...localVarHeaderParameter,
+              ...headersFromBaseOptions,
+              ...options.headers,
+            };
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2628,6 +3135,185 @@ export type GenerateEmbeddingSlugEnum = typeof GenerateEmbeddingSlugEnum[keyof t
 
 
 /**
+ * FilesApi - axios parameter creator
+ * @export
+ */
+export const FilesApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Stores uploaded file.
+         * @summary File upload
+         * @param {UploadFileTypeEnum} type 
+         * @param {string} xGradientWorkspaceId 
+         * @param {File} file 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uploadFile: async (type: UploadFileTypeEnum, xGradientWorkspaceId: string, file: File, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'type' is not null or undefined
+            assertParamExists('uploadFile', 'type', type)
+            // verify required parameter 'xGradientWorkspaceId' is not null or undefined
+            assertParamExists('uploadFile', 'xGradientWorkspaceId', xGradientWorkspaceId)
+            // verify required parameter 'file' is not null or undefined
+            assertParamExists('uploadFile', 'file', file)
+            const localVarPath = `/files`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+            // authentication AccessToken required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (type !== undefined) {
+                localVarQueryParameter['type'] = type;
+            }
+
+            if (xGradientWorkspaceId != null) {
+                localVarHeaderParameter['x-gradient-workspace-id'] = String(xGradientWorkspaceId);
+            }
+
+
+            if (file !== undefined) {
+              if (typeof file === 'object' && file.type === 'file') {
+                localVarFormParams.append('file', (file as any).contentStream as any, { knownLength: (file as any).fileSize });
+              } else {
+                localVarFormParams.append('file', file as any);
+              }
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+              ...localVarHeaderParameter,
+              ...headersFromBaseOptions,
+              ...(localVarFormParams as any).getHeaders?.(),
+              ...((localVarFormParams as any).hasKnownLength() ? { 'Content-Length': (localVarFormParams as any).getLengthSync() } : {}),
+              ...options.headers,
+            };
+            localVarRequestOptions.data = localVarFormParams;
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * FilesApi - functional programming interface
+ * @export
+ */
+export const FilesApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = FilesApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Stores uploaded file.
+         * @summary File upload
+         * @param {UploadFileTypeEnum} type 
+         * @param {string} xGradientWorkspaceId 
+         * @param {File} file 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async uploadFile(type: UploadFileTypeEnum, xGradientWorkspaceId: string, file: File, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UploadFileSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.uploadFile(type, xGradientWorkspaceId, file, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * FilesApi - factory interface
+ * @export
+ */
+export const FilesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = FilesApiFp(configuration)
+    return {
+        /**
+         * Stores uploaded file.
+         * @summary File upload
+         * @param {FilesApiUploadFileRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uploadFile(requestParameters: FilesApiUploadFileRequest, options?: AxiosRequestConfig): AxiosPromise<UploadFileSuccess> {
+            return localVarFp.uploadFile(requestParameters.type, requestParameters.xGradientWorkspaceId, requestParameters.file, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for uploadFile operation in FilesApi.
+ * @export
+ * @interface FilesApiUploadFileRequest
+ */
+export interface FilesApiUploadFileRequest {
+    /**
+     * 
+     * @type {'audioFile' | 'ragUserFile'}
+     * @memberof FilesApiUploadFile
+     */
+    readonly type: UploadFileTypeEnum
+
+    /**
+     * 
+     * @type {string}
+     * @memberof FilesApiUploadFile
+     */
+    readonly xGradientWorkspaceId: string
+
+    /**
+     * 
+     * @type {File}
+     * @memberof FilesApiUploadFile
+     */
+    readonly file: File
+}
+
+/**
+ * FilesApi - object-oriented interface
+ * @export
+ * @class FilesApi
+ * @extends {BaseAPI}
+ */
+export class FilesApi extends BaseAPI {
+    /**
+     * Stores uploaded file.
+     * @summary File upload
+     * @param {FilesApiUploadFileRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FilesApi
+     */
+    public uploadFile(requestParameters: FilesApiUploadFileRequest, options?: AxiosRequestConfig) {
+        return FilesApiFp(this.configuration).uploadFile(requestParameters.type, requestParameters.xGradientWorkspaceId, requestParameters.file, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+/**
+ * @export
+ */
+export const UploadFileTypeEnum = {
+    AudioFile: 'audioFile',
+    RagUserFile: 'ragUserFile'
+} as const;
+export type UploadFileTypeEnum = typeof UploadFileTypeEnum[keyof typeof UploadFileTypeEnum];
+
+
+/**
  * ModelsApi - axios parameter creator
  * @export
  */
@@ -2676,7 +3362,11 @@ export const ModelsApiAxiosParamCreator = function (configuration?: Configuratio
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.headers = {
+              ...localVarHeaderParameter,
+              ...headersFromBaseOptions,
+              ...options.headers,
+            };
             localVarRequestOptions.data = serializeDataIfNeeded(completeModelBodyParams, localVarRequestOptions, configuration)
 
             return {
@@ -2723,7 +3413,11 @@ export const ModelsApiAxiosParamCreator = function (configuration?: Configuratio
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.headers = {
+              ...localVarHeaderParameter,
+              ...headersFromBaseOptions,
+              ...options.headers,
+            };
             localVarRequestOptions.data = serializeDataIfNeeded(createModelBodyParams, localVarRequestOptions, configuration)
 
             return {
@@ -2769,7 +3463,11 @@ export const ModelsApiAxiosParamCreator = function (configuration?: Configuratio
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.headers = {
+              ...localVarHeaderParameter,
+              ...headersFromBaseOptions,
+              ...options.headers,
+            };
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2819,7 +3517,11 @@ export const ModelsApiAxiosParamCreator = function (configuration?: Configuratio
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.headers = {
+              ...localVarHeaderParameter,
+              ...headersFromBaseOptions,
+              ...options.headers,
+            };
             localVarRequestOptions.data = serializeDataIfNeeded(fineTuneModelBodyParams, localVarRequestOptions, configuration)
 
             return {
@@ -2865,7 +3567,11 @@ export const ModelsApiAxiosParamCreator = function (configuration?: Configuratio
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.headers = {
+              ...localVarHeaderParameter,
+              ...headersFromBaseOptions,
+              ...options.headers,
+            };
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2916,7 +3622,11 @@ export const ModelsApiAxiosParamCreator = function (configuration?: Configuratio
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.headers = {
+              ...localVarHeaderParameter,
+              ...headersFromBaseOptions,
+              ...options.headers,
+            };
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3317,5 +4027,268 @@ export const ListModelsCapabilityEnum = {
     Any: 'any'
 } as const;
 export type ListModelsCapabilityEnum = typeof ListModelsCapabilityEnum[keyof typeof ListModelsCapabilityEnum];
+
+
+/**
+ * RAGApi - axios parameter creator
+ * @export
+ */
+export const RAGApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Adds files to the RAG collection.
+         * @summary Add files to RAG collection
+         * @param {string} id 
+         * @param {string} xGradientWorkspaceId 
+         * @param {AddFilesToRagCollectionBodyParams} addFilesToRagCollectionBodyParams 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addFilesToRagCollection: async (id: string, xGradientWorkspaceId: string, addFilesToRagCollectionBodyParams: AddFilesToRagCollectionBodyParams, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('addFilesToRagCollection', 'id', id)
+            // verify required parameter 'xGradientWorkspaceId' is not null or undefined
+            assertParamExists('addFilesToRagCollection', 'xGradientWorkspaceId', xGradientWorkspaceId)
+            // verify required parameter 'addFilesToRagCollectionBodyParams' is not null or undefined
+            assertParamExists('addFilesToRagCollection', 'addFilesToRagCollectionBodyParams', addFilesToRagCollectionBodyParams)
+            const localVarPath = `/rag-collections/{id}/files`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication AccessToken required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (xGradientWorkspaceId != null) {
+                localVarHeaderParameter['x-gradient-workspace-id'] = String(xGradientWorkspaceId);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+              ...localVarHeaderParameter,
+              ...headersFromBaseOptions,
+              ...options.headers,
+            };
+            localVarRequestOptions.data = serializeDataIfNeeded(addFilesToRagCollectionBodyParams, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Creates a new collection of RAG documents.
+         * @summary RAG collections
+         * @param {string} xGradientWorkspaceId 
+         * @param {CreateRagCollectionBodyParams} createRagCollectionBodyParams 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createRagCollection: async (xGradientWorkspaceId: string, createRagCollectionBodyParams: CreateRagCollectionBodyParams, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'xGradientWorkspaceId' is not null or undefined
+            assertParamExists('createRagCollection', 'xGradientWorkspaceId', xGradientWorkspaceId)
+            // verify required parameter 'createRagCollectionBodyParams' is not null or undefined
+            assertParamExists('createRagCollection', 'createRagCollectionBodyParams', createRagCollectionBodyParams)
+            const localVarPath = `/rag-collections`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication AccessToken required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (xGradientWorkspaceId != null) {
+                localVarHeaderParameter['x-gradient-workspace-id'] = String(xGradientWorkspaceId);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+              ...localVarHeaderParameter,
+              ...headersFromBaseOptions,
+              ...options.headers,
+            };
+            localVarRequestOptions.data = serializeDataIfNeeded(createRagCollectionBodyParams, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * RAGApi - functional programming interface
+ * @export
+ */
+export const RAGApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = RAGApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Adds files to the RAG collection.
+         * @summary Add files to RAG collection
+         * @param {string} id 
+         * @param {string} xGradientWorkspaceId 
+         * @param {AddFilesToRagCollectionBodyParams} addFilesToRagCollectionBodyParams 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async addFilesToRagCollection(id: string, xGradientWorkspaceId: string, addFilesToRagCollectionBodyParams: AddFilesToRagCollectionBodyParams, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addFilesToRagCollection(id, xGradientWorkspaceId, addFilesToRagCollectionBodyParams, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Creates a new collection of RAG documents.
+         * @summary RAG collections
+         * @param {string} xGradientWorkspaceId 
+         * @param {CreateRagCollectionBodyParams} createRagCollectionBodyParams 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createRagCollection(xGradientWorkspaceId: string, createRagCollectionBodyParams: CreateRagCollectionBodyParams, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateRagCollectionSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createRagCollection(xGradientWorkspaceId, createRagCollectionBodyParams, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * RAGApi - factory interface
+ * @export
+ */
+export const RAGApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = RAGApiFp(configuration)
+    return {
+        /**
+         * Adds files to the RAG collection.
+         * @summary Add files to RAG collection
+         * @param {RAGApiAddFilesToRagCollectionRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addFilesToRagCollection(requestParameters: RAGApiAddFilesToRagCollectionRequest, options?: AxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.addFilesToRagCollection(requestParameters.id, requestParameters.xGradientWorkspaceId, requestParameters.addFilesToRagCollectionBodyParams, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Creates a new collection of RAG documents.
+         * @summary RAG collections
+         * @param {RAGApiCreateRagCollectionRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createRagCollection(requestParameters: RAGApiCreateRagCollectionRequest, options?: AxiosRequestConfig): AxiosPromise<CreateRagCollectionSuccess> {
+            return localVarFp.createRagCollection(requestParameters.xGradientWorkspaceId, requestParameters.createRagCollectionBodyParams, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for addFilesToRagCollection operation in RAGApi.
+ * @export
+ * @interface RAGApiAddFilesToRagCollectionRequest
+ */
+export interface RAGApiAddFilesToRagCollectionRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof RAGApiAddFilesToRagCollection
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof RAGApiAddFilesToRagCollection
+     */
+    readonly xGradientWorkspaceId: string
+
+    /**
+     * 
+     * @type {AddFilesToRagCollectionBodyParams}
+     * @memberof RAGApiAddFilesToRagCollection
+     */
+    readonly addFilesToRagCollectionBodyParams: AddFilesToRagCollectionBodyParams
+}
+
+/**
+ * Request parameters for createRagCollection operation in RAGApi.
+ * @export
+ * @interface RAGApiCreateRagCollectionRequest
+ */
+export interface RAGApiCreateRagCollectionRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof RAGApiCreateRagCollection
+     */
+    readonly xGradientWorkspaceId: string
+
+    /**
+     * 
+     * @type {CreateRagCollectionBodyParams}
+     * @memberof RAGApiCreateRagCollection
+     */
+    readonly createRagCollectionBodyParams: CreateRagCollectionBodyParams
+}
+
+/**
+ * RAGApi - object-oriented interface
+ * @export
+ * @class RAGApi
+ * @extends {BaseAPI}
+ */
+export class RAGApi extends BaseAPI {
+    /**
+     * Adds files to the RAG collection.
+     * @summary Add files to RAG collection
+     * @param {RAGApiAddFilesToRagCollectionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RAGApi
+     */
+    public addFilesToRagCollection(requestParameters: RAGApiAddFilesToRagCollectionRequest, options?: AxiosRequestConfig) {
+        return RAGApiFp(this.configuration).addFilesToRagCollection(requestParameters.id, requestParameters.xGradientWorkspaceId, requestParameters.addFilesToRagCollectionBodyParams, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Creates a new collection of RAG documents.
+     * @summary RAG collections
+     * @param {RAGApiCreateRagCollectionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RAGApi
+     */
+    public createRagCollection(requestParameters: RAGApiCreateRagCollectionRequest, options?: AxiosRequestConfig) {
+        return RAGApiFp(this.configuration).createRagCollection(requestParameters.xGradientWorkspaceId, requestParameters.createRagCollectionBodyParams, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
 
 
