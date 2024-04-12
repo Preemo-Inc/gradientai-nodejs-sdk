@@ -114,3 +114,11 @@ export type CreateRagCollectionParams = {
   name: string;
   slug: EmbeddingsModelSlug;
 };
+
+export type RagFileIngestionStatus =
+  | "pending"
+  | "pendingCancellation"
+  | "running"
+  | "cancelled"
+  | "failed"
+  | "succeeded";

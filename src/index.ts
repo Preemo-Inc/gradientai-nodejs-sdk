@@ -333,15 +333,44 @@ export class Gradient {
   public readonly getRagCollection = async ({
     id,
   }: GetRagCollectionParams): Promise<RagCollection> => {
-    
-    const ragCollection = new RagCollection({
+    const {
+      data: { files, name },
+    } = await this.ragApi.getRagCollection({
+      xGradientWorkspaceId: this.workspaceId,
+      id,
+    });
+
+    return new RagCollection({
+      files,
       filesApiManager: this.filesApiManager,
       id,
+      name,
       ragApi: this.ragApi,
       workspaceId: this.workspaceId,
     });
+  };
 
-    return Promise.resolve(ragCollection);
+  /**
+   *  Files are not present in the list call. To retrieve the files use `getRagCollection`.
+   */
+  public readonly listRagCollections = async ({}: {}): Promise<
+    Array<Omit<RagCollection, "files">>
+  > => {
+    const { data } = await this.ragApi.listRagCollections({
+      xGradientWorkspaceId: this.workspaceId,
+    });
+
+    return data.ragCollections.map(
+      ({ id, name }) =>
+        new RagCollection({
+          files: [],
+          filesApiManager: this.filesApiManager,
+          id,
+          name,
+          ragApi: this.ragApi,
+          workspaceId: this.workspaceId,
+        })
+    );
   };
 
   public readonly createRagCollection = async ({
@@ -373,11 +402,7 @@ export class Gradient {
       xGradientWorkspaceId: this.workspaceId,
     });
 
-    return new RagCollection({
-      filesApiManager: this.filesApiManager,
-      id,
-      ragApi: this.ragApi,
-      workspaceId: this.workspaceId,
-    });
+    return this.getRagCollection({ id });
   };
 }
+

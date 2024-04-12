@@ -2,22 +2,29 @@ import { basename } from "path";
 import { RAGApi } from "../api";
 import { IFilesApiManager } from "../files/types";
 import { AddFilesParams } from "./paramTypes";
+import { RagFile } from "./returnTypes";
 
 export class RagCollection {
   private readonly filesApiManager: IFilesApiManager;
   private readonly ragApi: RAGApi;
 
+  public files: Array<RagFile>;
   public readonly id: string;
+  public readonly name: string;
   public readonly workspaceId: string;
 
   public constructor(params: {
+    files: Array<RagFile>;
     filesApiManager: IFilesApiManager;
     id: string;
+    name: string;
     ragApi: RAGApi;
     workspaceId: string;
   }) {
+    this.files = params.files;
     this.filesApiManager = params.filesApiManager;
     this.id = params.id;
+    this.name = params.name;
     this.ragApi = params.ragApi;
     this.workspaceId = params.workspaceId;
   }
@@ -40,5 +47,14 @@ export class RagCollection {
       id: this.id,
       xGradientWorkspaceId: this.workspaceId,
     });
+
+    const {
+      data: { files: updatedFiles },
+    } = await this.ragApi.getRagCollection({
+      xGradientWorkspaceId: this.workspaceId,
+      id: this.id,
+    });
+
+    this.files = updatedFiles;
   };
 }
