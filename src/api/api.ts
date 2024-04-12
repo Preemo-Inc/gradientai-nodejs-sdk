@@ -1709,6 +1709,100 @@ export type GetModelSuccessTypeEnum = typeof GetModelSuccessTypeEnum[keyof typeo
 /**
  * 
  * @export
+ * @interface GetRagCollectionError
+ */
+export interface GetRagCollectionError {
+    /**
+     * 
+     * @type {string}
+     * @memberof GetRagCollectionError
+     */
+    'message': string;
+}
+/**
+ * 
+ * @export
+ * @interface GetRagCollectionSuccess
+ */
+export interface GetRagCollectionSuccess {
+    /**
+     * 
+     * @type {string}
+     * @memberof GetRagCollectionSuccess
+     */
+    'creationTime': string;
+    /**
+     * 
+     * @type {Array<GetRagCollectionSuccessFilesInner>}
+     * @memberof GetRagCollectionSuccess
+     */
+    'files': Array<GetRagCollectionSuccessFilesInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetRagCollectionSuccess
+     */
+    'latestUpdateTime': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetRagCollectionSuccess
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetRagCollectionSuccess
+     */
+    'slug': GetRagCollectionSuccessSlugEnum;
+}
+
+export const GetRagCollectionSuccessSlugEnum = {
+    BgeLarge: 'bge-large'
+} as const;
+
+export type GetRagCollectionSuccessSlugEnum = typeof GetRagCollectionSuccessSlugEnum[keyof typeof GetRagCollectionSuccessSlugEnum];
+
+/**
+ * 
+ * @export
+ * @interface GetRagCollectionSuccessFilesInner
+ */
+export interface GetRagCollectionSuccessFilesInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof GetRagCollectionSuccessFilesInner
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetRagCollectionSuccessFilesInner
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetRagCollectionSuccessFilesInner
+     */
+    'status': GetRagCollectionSuccessFilesInnerStatusEnum;
+}
+
+export const GetRagCollectionSuccessFilesInnerStatusEnum = {
+    Cancelled: 'cancelled',
+    Failed: 'failed',
+    Succeeded: 'succeeded',
+    Pending: 'pending',
+    PendingCancellation: 'pendingCancellation',
+    Running: 'running'
+} as const;
+
+export type GetRagCollectionSuccessFilesInnerStatusEnum = typeof GetRagCollectionSuccessFilesInnerStatusEnum[keyof typeof GetRagCollectionSuccessFilesInnerStatusEnum];
+
+/**
+ * 
+ * @export
  * @interface ListEmbeddingsError
  */
 export interface ListEmbeddingsError {
@@ -1783,6 +1877,76 @@ export interface ListModelsSuccess {
  * @export
  */
 export type ListModelsSuccessModelsInner = BaseModel | ModelAdapter;
+
+/**
+ * 
+ * @export
+ * @interface ListRagCollectionsError
+ */
+export interface ListRagCollectionsError {
+    /**
+     * 
+     * @type {string}
+     * @memberof ListRagCollectionsError
+     */
+    'message': string;
+}
+/**
+ * 
+ * @export
+ * @interface ListRagCollectionsSuccess
+ */
+export interface ListRagCollectionsSuccess {
+    /**
+     * 
+     * @type {Array<ListRagCollectionsSuccessRagCollectionsInner>}
+     * @memberof ListRagCollectionsSuccess
+     */
+    'ragCollections': Array<ListRagCollectionsSuccessRagCollectionsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface ListRagCollectionsSuccessRagCollectionsInner
+ */
+export interface ListRagCollectionsSuccessRagCollectionsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof ListRagCollectionsSuccessRagCollectionsInner
+     */
+    'creationTime': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ListRagCollectionsSuccessRagCollectionsInner
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ListRagCollectionsSuccessRagCollectionsInner
+     */
+    'latestUpdateTime': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ListRagCollectionsSuccessRagCollectionsInner
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ListRagCollectionsSuccessRagCollectionsInner
+     */
+    'slug': ListRagCollectionsSuccessRagCollectionsInnerSlugEnum;
+}
+
+export const ListRagCollectionsSuccessRagCollectionsInnerSlugEnum = {
+    BgeLarge: 'bge-large'
+} as const;
+
+export type ListRagCollectionsSuccessRagCollectionsInnerSlugEnum = typeof ListRagCollectionsSuccessRagCollectionsInnerSlugEnum[keyof typeof ListRagCollectionsSuccessRagCollectionsInnerSlugEnum];
 
 /**
  * 
@@ -2174,7 +2338,7 @@ export const BlocksApiAxiosParamCreator = function (configuration?: Configuratio
 
 
             if (file !== undefined) {
-              if (typeof file === 'object' && file.type === 'file') {
+              if (typeof file === 'object' && (file as any).type === 'file') {
                 localVarFormParams.append('file', (file as any).contentStream as any, { knownLength: (file as any).fileSize });
               } else {
                 localVarFormParams.append('file', file as any);
@@ -3183,7 +3347,7 @@ export const FilesApiAxiosParamCreator = function (configuration?: Configuration
 
 
             if (file !== undefined) {
-              if (typeof file === 'object' && file.type === 'file') {
+              if (typeof file === 'object' && (file as any).type === 'file') {
                 localVarFormParams.append('file', (file as any).contentStream as any, { knownLength: (file as any).fileSize });
               } else {
                 localVarFormParams.append('file', file as any);
@@ -4092,7 +4256,7 @@ export const RAGApiAxiosParamCreator = function (configuration?: Configuration) 
         },
         /**
          * Creates a new collection of RAG documents.
-         * @summary RAG collections
+         * @summary Create RAG collection
          * @param {string} xGradientWorkspaceId 
          * @param {CreateRagCollectionBodyParams} createRagCollectionBodyParams 
          * @param {*} [options] Override http request option.
@@ -4141,6 +4305,100 @@ export const RAGApiAxiosParamCreator = function (configuration?: Configuration) 
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Gets the RAG collection details.
+         * @summary Get RAG collection
+         * @param {string} id 
+         * @param {string} xGradientWorkspaceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRagCollection: async (id: string, xGradientWorkspaceId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getRagCollection', 'id', id)
+            // verify required parameter 'xGradientWorkspaceId' is not null or undefined
+            assertParamExists('getRagCollection', 'xGradientWorkspaceId', xGradientWorkspaceId)
+            const localVarPath = `/rag-collections/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication AccessToken required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (xGradientWorkspaceId != null) {
+                localVarHeaderParameter['x-gradient-workspace-id'] = String(xGradientWorkspaceId);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+              ...localVarHeaderParameter,
+              ...headersFromBaseOptions,
+              ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Lists all RAG collections associated with your workspace.
+         * @summary List RAG collections
+         * @param {string} xGradientWorkspaceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listRagCollections: async (xGradientWorkspaceId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'xGradientWorkspaceId' is not null or undefined
+            assertParamExists('listRagCollections', 'xGradientWorkspaceId', xGradientWorkspaceId)
+            const localVarPath = `/rag-collections`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication AccessToken required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (xGradientWorkspaceId != null) {
+                localVarHeaderParameter['x-gradient-workspace-id'] = String(xGradientWorkspaceId);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+              ...localVarHeaderParameter,
+              ...headersFromBaseOptions,
+              ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -4166,7 +4424,7 @@ export const RAGApiFp = function(configuration?: Configuration) {
         },
         /**
          * Creates a new collection of RAG documents.
-         * @summary RAG collections
+         * @summary Create RAG collection
          * @param {string} xGradientWorkspaceId 
          * @param {CreateRagCollectionBodyParams} createRagCollectionBodyParams 
          * @param {*} [options] Override http request option.
@@ -4174,6 +4432,29 @@ export const RAGApiFp = function(configuration?: Configuration) {
          */
         async createRagCollection(xGradientWorkspaceId: string, createRagCollectionBodyParams: CreateRagCollectionBodyParams, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateRagCollectionSuccess>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createRagCollection(xGradientWorkspaceId, createRagCollectionBodyParams, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Gets the RAG collection details.
+         * @summary Get RAG collection
+         * @param {string} id 
+         * @param {string} xGradientWorkspaceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getRagCollection(id: string, xGradientWorkspaceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetRagCollectionSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getRagCollection(id, xGradientWorkspaceId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Lists all RAG collections associated with your workspace.
+         * @summary List RAG collections
+         * @param {string} xGradientWorkspaceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listRagCollections(xGradientWorkspaceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListRagCollectionsSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listRagCollections(xGradientWorkspaceId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -4198,13 +4479,33 @@ export const RAGApiFactory = function (configuration?: Configuration, basePath?:
         },
         /**
          * Creates a new collection of RAG documents.
-         * @summary RAG collections
+         * @summary Create RAG collection
          * @param {RAGApiCreateRagCollectionRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         createRagCollection(requestParameters: RAGApiCreateRagCollectionRequest, options?: AxiosRequestConfig): AxiosPromise<CreateRagCollectionSuccess> {
             return localVarFp.createRagCollection(requestParameters.xGradientWorkspaceId, requestParameters.createRagCollectionBodyParams, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Gets the RAG collection details.
+         * @summary Get RAG collection
+         * @param {RAGApiGetRagCollectionRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRagCollection(requestParameters: RAGApiGetRagCollectionRequest, options?: AxiosRequestConfig): AxiosPromise<GetRagCollectionSuccess> {
+            return localVarFp.getRagCollection(requestParameters.id, requestParameters.xGradientWorkspaceId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Lists all RAG collections associated with your workspace.
+         * @summary List RAG collections
+         * @param {RAGApiListRagCollectionsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listRagCollections(requestParameters: RAGApiListRagCollectionsRequest, options?: AxiosRequestConfig): AxiosPromise<ListRagCollectionsSuccess> {
+            return localVarFp.listRagCollections(requestParameters.xGradientWorkspaceId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -4259,6 +4560,41 @@ export interface RAGApiCreateRagCollectionRequest {
 }
 
 /**
+ * Request parameters for getRagCollection operation in RAGApi.
+ * @export
+ * @interface RAGApiGetRagCollectionRequest
+ */
+export interface RAGApiGetRagCollectionRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof RAGApiGetRagCollection
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof RAGApiGetRagCollection
+     */
+    readonly xGradientWorkspaceId: string
+}
+
+/**
+ * Request parameters for listRagCollections operation in RAGApi.
+ * @export
+ * @interface RAGApiListRagCollectionsRequest
+ */
+export interface RAGApiListRagCollectionsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof RAGApiListRagCollections
+     */
+    readonly xGradientWorkspaceId: string
+}
+
+/**
  * RAGApi - object-oriented interface
  * @export
  * @class RAGApi
@@ -4279,7 +4615,7 @@ export class RAGApi extends BaseAPI {
 
     /**
      * Creates a new collection of RAG documents.
-     * @summary RAG collections
+     * @summary Create RAG collection
      * @param {RAGApiCreateRagCollectionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4287,6 +4623,30 @@ export class RAGApi extends BaseAPI {
      */
     public createRagCollection(requestParameters: RAGApiCreateRagCollectionRequest, options?: AxiosRequestConfig) {
         return RAGApiFp(this.configuration).createRagCollection(requestParameters.xGradientWorkspaceId, requestParameters.createRagCollectionBodyParams, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Gets the RAG collection details.
+     * @summary Get RAG collection
+     * @param {RAGApiGetRagCollectionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RAGApi
+     */
+    public getRagCollection(requestParameters: RAGApiGetRagCollectionRequest, options?: AxiosRequestConfig) {
+        return RAGApiFp(this.configuration).getRagCollection(requestParameters.id, requestParameters.xGradientWorkspaceId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Lists all RAG collections associated with your workspace.
+     * @summary List RAG collections
+     * @param {RAGApiListRagCollectionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RAGApi
+     */
+    public listRagCollections(requestParameters: RAGApiListRagCollectionsRequest, options?: AxiosRequestConfig) {
+        return RAGApiFp(this.configuration).listRagCollections(requestParameters.xGradientWorkspaceId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
