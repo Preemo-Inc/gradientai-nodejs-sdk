@@ -916,6 +916,19 @@ export interface DeleteModelError {
 /**
  * 
  * @export
+ * @interface DeleteRagCollectionError
+ */
+export interface DeleteRagCollectionError {
+    /**
+     * 
+     * @type {string}
+     * @memberof DeleteRagCollectionError
+     */
+    'message': string;
+}
+/**
+ * 
+ * @export
  * @interface ExtractEntityBodyParams
  */
 export interface ExtractEntityBodyParams {
@@ -4306,6 +4319,55 @@ export const RAGApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
+         * Deletes the RAG collection.
+         * @summary Delete RAG collection
+         * @param {string} id 
+         * @param {string} xGradientWorkspaceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteRagCollection: async (id: string, xGradientWorkspaceId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteRagCollection', 'id', id)
+            // verify required parameter 'xGradientWorkspaceId' is not null or undefined
+            assertParamExists('deleteRagCollection', 'xGradientWorkspaceId', xGradientWorkspaceId)
+            const localVarPath = `/rag-collections/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication AccessToken required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (xGradientWorkspaceId != null) {
+                localVarHeaderParameter['x-gradient-workspace-id'] = String(xGradientWorkspaceId);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+              ...localVarHeaderParameter,
+              ...headersFromBaseOptions,
+              ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Gets the RAG collection details.
          * @summary Get RAG collection
          * @param {string} id 
@@ -4435,6 +4497,18 @@ export const RAGApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Deletes the RAG collection.
+         * @summary Delete RAG collection
+         * @param {string} id 
+         * @param {string} xGradientWorkspaceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteRagCollection(id: string, xGradientWorkspaceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteRagCollection(id, xGradientWorkspaceId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Gets the RAG collection details.
          * @summary Get RAG collection
          * @param {string} id 
@@ -4486,6 +4560,16 @@ export const RAGApiFactory = function (configuration?: Configuration, basePath?:
          */
         createRagCollection(requestParameters: RAGApiCreateRagCollectionRequest, options?: AxiosRequestConfig): AxiosPromise<CreateRagCollectionSuccess> {
             return localVarFp.createRagCollection(requestParameters.xGradientWorkspaceId, requestParameters.createRagCollectionBodyParams, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Deletes the RAG collection.
+         * @summary Delete RAG collection
+         * @param {RAGApiDeleteRagCollectionRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteRagCollection(requestParameters: RAGApiDeleteRagCollectionRequest, options?: AxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.deleteRagCollection(requestParameters.id, requestParameters.xGradientWorkspaceId, options).then((request) => request(axios, basePath));
         },
         /**
          * Gets the RAG collection details.
@@ -4560,6 +4644,27 @@ export interface RAGApiCreateRagCollectionRequest {
 }
 
 /**
+ * Request parameters for deleteRagCollection operation in RAGApi.
+ * @export
+ * @interface RAGApiDeleteRagCollectionRequest
+ */
+export interface RAGApiDeleteRagCollectionRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof RAGApiDeleteRagCollection
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof RAGApiDeleteRagCollection
+     */
+    readonly xGradientWorkspaceId: string
+}
+
+/**
  * Request parameters for getRagCollection operation in RAGApi.
  * @export
  * @interface RAGApiGetRagCollectionRequest
@@ -4623,6 +4728,18 @@ export class RAGApi extends BaseAPI {
      */
     public createRagCollection(requestParameters: RAGApiCreateRagCollectionRequest, options?: AxiosRequestConfig) {
         return RAGApiFp(this.configuration).createRagCollection(requestParameters.xGradientWorkspaceId, requestParameters.createRagCollectionBodyParams, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Deletes the RAG collection.
+     * @summary Delete RAG collection
+     * @param {RAGApiDeleteRagCollectionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RAGApi
+     */
+    public deleteRagCollection(requestParameters: RAGApiDeleteRagCollectionRequest, options?: AxiosRequestConfig) {
+        return RAGApiFp(this.configuration).deleteRagCollection(requestParameters.id, requestParameters.xGradientWorkspaceId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

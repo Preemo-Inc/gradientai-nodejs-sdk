@@ -57,4 +57,11 @@ export class RagCollection {
 
     this.files = updatedFiles;
   };
+
+  public readonly delete = async ({}): Promise<void> => {
+    await this.ragApi.deleteRagCollection({
+      id: this.id,
+      xGradientWorkspaceId: this.workspaceId,
+    });
+  };
 }
