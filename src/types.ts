@@ -1,5 +1,6 @@
 import { BaseModelCapability } from "./model/baseModel";
 import { EmbeddingsModelSlug } from "./model/paramTypes";
+import { RagParser } from "./rag/paramTypes";
 
 export type CapabilityFilterOption = BaseModelCapability | "any";
 
@@ -112,6 +113,7 @@ export type GetRagCollectionParams = {
 export type CreateRagCollectionParams = {
   filepaths?: Array<string>;
   name: string;
+  parser?: RagParser;
   slug: EmbeddingsModelSlug;
 };
 

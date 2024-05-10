@@ -333,18 +333,17 @@ export class Gradient {
   public readonly getRagCollection = async ({
     id,
   }: GetRagCollectionParams): Promise<RagCollection> => {
-    const {
-      data: { files, name },
-    } = await this.ragApi.getRagCollection({
+    const { data: ragCollection } = await this.ragApi.getRagCollection({
       xGradientWorkspaceId: this.workspaceId,
       id,
     });
 
     return new RagCollection({
-      files,
+      files: ragCollection.files,
       filesApiManager: this.filesApiManager,
-      id,
-      name,
+      id: ragCollection.id,
+      name: ragCollection.name,
+      parser: ragCollection.parser,
       ragApi: this.ragApi,
       workspaceId: this.workspaceId,
     });
@@ -361,12 +360,13 @@ export class Gradient {
     });
 
     return data.ragCollections.map(
-      ({ id, name }) =>
+      ({ id, name, parser }) =>
         new RagCollection({
           files: [],
           filesApiManager: this.filesApiManager,
           id,
           name,
+          parser,
           ragApi: this.ragApi,
           workspaceId: this.workspaceId,
         })
@@ -376,6 +376,7 @@ export class Gradient {
   public readonly createRagCollection = async ({
     filepaths,
     name,
+    parser,
     slug,
   }: CreateRagCollectionParams): Promise<RagCollection> => {
     let files: CreateRagCollectionBodyParams["files"];
@@ -391,12 +392,22 @@ export class Gradient {
       }));
     }
 
+    let ragParser: CreateRagCollectionBodyParams["parser"];
+    if (!isUndefined(parser)) {
+      ragParser = {
+        chunkSize: parser.chunkSize,
+        chunkOverlap: parser.chunkOverlap,
+        parserType: "simpleNodeParser",
+      };
+    }
+
     const {
       data: { id },
     } = await this.ragApi.createRagCollection({
       createRagCollectionBodyParams: {
         files,
         name,
+        parser: ragParser,
         slug,
       },
       xGradientWorkspaceId: this.workspaceId,
