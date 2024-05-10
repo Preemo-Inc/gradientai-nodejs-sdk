@@ -1,6 +1,6 @@
 {
   "name": "@gradientai/nodejs-sdk",
-  "version": "1.10.0",
+  "version": "1.11.0",
   "description": "JavaScript and TypeScript client for Gradient AI",
   "engines": {
     "node": ">=18"

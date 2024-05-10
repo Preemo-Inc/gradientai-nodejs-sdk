@@ -1,7 +1,7 @@
 import { basename } from "path";
 import { RAGApi } from "../api";
 import { IFilesApiManager } from "../files/types";
-import { AddFilesParams } from "./paramTypes";
+import { AddFilesParams, RagParser } from "./paramTypes";
 import { RagFile } from "./returnTypes";
 
 export class RagCollection {
@@ -11,6 +11,7 @@ export class RagCollection {
   public files: Array<RagFile>;
   public readonly id: string;
   public readonly name: string;
+  public readonly parser: Required<RagParser>;
   public readonly workspaceId: string;
 
   public constructor(params: {
@@ -18,6 +19,7 @@ export class RagCollection {
     filesApiManager: IFilesApiManager;
     id: string;
     name: string;
+    parser: Required<RagParser>;
     ragApi: RAGApi;
     workspaceId: string;
   }) {
@@ -25,6 +27,7 @@ export class RagCollection {
     this.filesApiManager = params.filesApiManager;
     this.id = params.id;
     this.name = params.name;
+    this.parser = params.parser;
     this.ragApi = params.ragApi;
     this.workspaceId = params.workspaceId;
   }

@@ -843,6 +843,12 @@ export interface CreateRagCollectionBodyParams {
     'name': string;
     /**
      * 
+     * @type {SimpleNodeParser}
+     * @memberof CreateRagCollectionBodyParams
+     */
+    'parser'?: SimpleNodeParser | null;
+    /**
+     * 
      * @type {string}
      * @memberof CreateRagCollectionBodyParams
      */
@@ -1755,6 +1761,12 @@ export interface GetRagCollectionSuccess {
      * @type {string}
      * @memberof GetRagCollectionSuccess
      */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetRagCollectionSuccess
+     */
     'latestUpdateTime': string;
     /**
      * 
@@ -1762,6 +1774,12 @@ export interface GetRagCollectionSuccess {
      * @memberof GetRagCollectionSuccess
      */
     'name': string;
+    /**
+     * 
+     * @type {ListRagCollectionsSuccessRagCollectionsInnerParser}
+     * @memberof GetRagCollectionSuccess
+     */
+    'parser': ListRagCollectionsSuccessRagCollectionsInnerParser;
     /**
      * 
      * @type {string}
@@ -1949,6 +1967,12 @@ export interface ListRagCollectionsSuccessRagCollectionsInner {
     'name': string;
     /**
      * 
+     * @type {ListRagCollectionsSuccessRagCollectionsInnerParser}
+     * @memberof ListRagCollectionsSuccessRagCollectionsInner
+     */
+    'parser': ListRagCollectionsSuccessRagCollectionsInnerParser;
+    /**
+     * 
      * @type {string}
      * @memberof ListRagCollectionsSuccessRagCollectionsInner
      */
@@ -1960,6 +1984,44 @@ export const ListRagCollectionsSuccessRagCollectionsInnerSlugEnum = {
 } as const;
 
 export type ListRagCollectionsSuccessRagCollectionsInnerSlugEnum = typeof ListRagCollectionsSuccessRagCollectionsInnerSlugEnum[keyof typeof ListRagCollectionsSuccessRagCollectionsInnerSlugEnum];
+
+/**
+ * @type ListRagCollectionsSuccessRagCollectionsInnerParser
+ * @export
+ */
+export type ListRagCollectionsSuccessRagCollectionsInnerParser = ListRagCollectionsSuccessRagCollectionsInnerParserOneOf;
+
+/**
+ * 
+ * @export
+ * @interface ListRagCollectionsSuccessRagCollectionsInnerParserOneOf
+ */
+export interface ListRagCollectionsSuccessRagCollectionsInnerParserOneOf {
+    /**
+     * 
+     * @type {number}
+     * @memberof ListRagCollectionsSuccessRagCollectionsInnerParserOneOf
+     */
+    'chunkOverlap': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ListRagCollectionsSuccessRagCollectionsInnerParserOneOf
+     */
+    'chunkSize': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ListRagCollectionsSuccessRagCollectionsInnerParserOneOf
+     */
+    'parserType': ListRagCollectionsSuccessRagCollectionsInnerParserOneOfParserTypeEnum;
+}
+
+export const ListRagCollectionsSuccessRagCollectionsInnerParserOneOfParserTypeEnum = {
+    SimpleNodeParser: 'simpleNodeParser'
+} as const;
+
+export type ListRagCollectionsSuccessRagCollectionsInnerParserOneOfParserTypeEnum = typeof ListRagCollectionsSuccessRagCollectionsInnerParserOneOfParserTypeEnum[keyof typeof ListRagCollectionsSuccessRagCollectionsInnerParserOneOfParserTypeEnum];
 
 /**
  * 
@@ -2050,6 +2112,38 @@ export interface PersonalizeDocumentSuccess {
      */
     'personalizedDocument': string;
 }
+/**
+ * 
+ * @export
+ * @interface SimpleNodeParser
+ */
+export interface SimpleNodeParser {
+    /**
+     * 
+     * @type {number}
+     * @memberof SimpleNodeParser
+     */
+    'chunkOverlap'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof SimpleNodeParser
+     */
+    'chunkSize'?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SimpleNodeParser
+     */
+    'parserType': SimpleNodeParserParserTypeEnum;
+}
+
+export const SimpleNodeParserParserTypeEnum = {
+    SimpleNodeParser: 'simpleNodeParser'
+} as const;
+
+export type SimpleNodeParserParserTypeEnum = typeof SimpleNodeParserParserTypeEnum[keyof typeof SimpleNodeParserParserTypeEnum];
+
 /**
  * 
  * @export
