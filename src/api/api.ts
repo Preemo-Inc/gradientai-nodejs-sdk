@@ -843,10 +843,10 @@ export interface CreateRagCollectionBodyParams {
     'name': string;
     /**
      * 
-     * @type {SimpleNodeParser}
+     * @type {CreateRagCollectionBodyParamsParser}
      * @memberof CreateRagCollectionBodyParams
      */
-    'parser'?: SimpleNodeParser | null;
+    'parser'?: CreateRagCollectionBodyParamsParser | null;
     /**
      * 
      * @type {string}
@@ -880,6 +880,12 @@ export interface CreateRagCollectionBodyParamsFilesInner {
      */
     'name': string;
 }
+/**
+ * @type CreateRagCollectionBodyParamsParser
+ * @export
+ */
+export type CreateRagCollectionBodyParamsParser = { parserType: 'sentenceWindowNodeParser' } & SentenceWindowNodeParser | { parserType: 'simpleNodeParser' } & SimpleNodeParser;
+
 /**
  * 
  * @export
@@ -1989,7 +1995,7 @@ export type ListRagCollectionsSuccessRagCollectionsInnerSlugEnum = typeof ListRa
  * @type ListRagCollectionsSuccessRagCollectionsInnerParser
  * @export
  */
-export type ListRagCollectionsSuccessRagCollectionsInnerParser = ListRagCollectionsSuccessRagCollectionsInnerParserOneOf;
+export type ListRagCollectionsSuccessRagCollectionsInnerParser = ListRagCollectionsSuccessRagCollectionsInnerParserOneOf | ListRagCollectionsSuccessRagCollectionsInnerParserOneOf1;
 
 /**
  * 
@@ -2015,13 +2021,51 @@ export interface ListRagCollectionsSuccessRagCollectionsInnerParserOneOf {
      * @memberof ListRagCollectionsSuccessRagCollectionsInnerParserOneOf
      */
     'parserType': ListRagCollectionsSuccessRagCollectionsInnerParserOneOfParserTypeEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof ListRagCollectionsSuccessRagCollectionsInnerParserOneOf
+     */
+    'windowSize': number;
 }
 
 export const ListRagCollectionsSuccessRagCollectionsInnerParserOneOfParserTypeEnum = {
-    SimpleNodeParser: 'simpleNodeParser'
+    SentenceWindowNodeParser: 'sentenceWindowNodeParser'
 } as const;
 
 export type ListRagCollectionsSuccessRagCollectionsInnerParserOneOfParserTypeEnum = typeof ListRagCollectionsSuccessRagCollectionsInnerParserOneOfParserTypeEnum[keyof typeof ListRagCollectionsSuccessRagCollectionsInnerParserOneOfParserTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface ListRagCollectionsSuccessRagCollectionsInnerParserOneOf1
+ */
+export interface ListRagCollectionsSuccessRagCollectionsInnerParserOneOf1 {
+    /**
+     * 
+     * @type {number}
+     * @memberof ListRagCollectionsSuccessRagCollectionsInnerParserOneOf1
+     */
+    'chunkOverlap': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ListRagCollectionsSuccessRagCollectionsInnerParserOneOf1
+     */
+    'chunkSize': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ListRagCollectionsSuccessRagCollectionsInnerParserOneOf1
+     */
+    'parserType': ListRagCollectionsSuccessRagCollectionsInnerParserOneOf1ParserTypeEnum;
+}
+
+export const ListRagCollectionsSuccessRagCollectionsInnerParserOneOf1ParserTypeEnum = {
+    SimpleNodeParser: 'simpleNodeParser'
+} as const;
+
+export type ListRagCollectionsSuccessRagCollectionsInnerParserOneOf1ParserTypeEnum = typeof ListRagCollectionsSuccessRagCollectionsInnerParserOneOf1ParserTypeEnum[keyof typeof ListRagCollectionsSuccessRagCollectionsInnerParserOneOf1ParserTypeEnum];
 
 /**
  * 
@@ -2112,6 +2156,44 @@ export interface PersonalizeDocumentSuccess {
      */
     'personalizedDocument': string;
 }
+/**
+ * 
+ * @export
+ * @interface SentenceWindowNodeParser
+ */
+export interface SentenceWindowNodeParser {
+    /**
+     * 
+     * @type {number}
+     * @memberof SentenceWindowNodeParser
+     */
+    'chunkOverlap'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof SentenceWindowNodeParser
+     */
+    'chunkSize'?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SentenceWindowNodeParser
+     */
+    'parserType': SentenceWindowNodeParserParserTypeEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof SentenceWindowNodeParser
+     */
+    'windowSize'?: number | null;
+}
+
+export const SentenceWindowNodeParserParserTypeEnum = {
+    SentenceWindowNodeParser: 'sentenceWindowNodeParser'
+} as const;
+
+export type SentenceWindowNodeParserParserTypeEnum = typeof SentenceWindowNodeParserParserTypeEnum[keyof typeof SentenceWindowNodeParserParserTypeEnum];
+
 /**
  * 
  * @export

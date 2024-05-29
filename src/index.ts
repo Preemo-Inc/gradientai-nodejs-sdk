@@ -6,6 +6,7 @@ import {
   BlocksApi,
   Configuration,
   CreateRagCollectionBodyParams,
+  CreateRagCollectionBodyParamsParser,
   EmbeddingsApi,
   FilesApi,
   GenerateEmbeddingSlugEnum,
@@ -392,13 +393,30 @@ export class Gradient {
       }));
     }
 
-    let ragParser: CreateRagCollectionBodyParams["parser"];
+    let ragParser: CreateRagCollectionBodyParamsParser = null;
     if (!isUndefined(parser)) {
-      ragParser = {
-        chunkSize: parser.chunkSize,
-        chunkOverlap: parser.chunkOverlap,
-        parserType: "simpleNodeParser",
-      };
+      switch (parser.parserType) {
+        case "simpleNodeParser": {
+          ragParser = {
+            chunkSize: parser.chunkSize,
+            chunkOverlap: parser.chunkOverlap,
+            parserType: "simpleNodeParser",
+          };
+          break;
+        }
+        case "sentenceWindowNodeParser": {
+          ragParser = {
+            chunkSize: parser.chunkSize,
+            chunkOverlap: parser.chunkOverlap,
+            parserType: "sentenceWindowNodeParser",
+            windowSize: parser.windowSize,
+          };
+          break;
+        }
+        default: {
+          expectNever(parser);
+        }
+      }
     }
 
     const {
