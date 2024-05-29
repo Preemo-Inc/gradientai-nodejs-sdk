@@ -8,4 +8,11 @@ export type SimpleNodeParser = {
   parserType: "simpleNodeParser";
 };
 
-export type RagParser = SimpleNodeParser;
+export type SentenceWindowNodeParser = {
+  chunkSize?: number;
+  chunkOverlap?: number;
+  parserType: "sentenceWindowNodeParser";
+  windowSize?: number;
+};
+
+export type RagParser = SentenceWindowNodeParser | SimpleNodeParser;
