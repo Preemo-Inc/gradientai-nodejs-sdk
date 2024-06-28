@@ -6,7 +6,6 @@ import {
   BlocksApi,
   Configuration,
   CreateRagCollectionBodyParams,
-  CreateRagCollectionBodyParamsParser,
   EmbeddingsApi,
   FilesApi,
   GenerateEmbeddingSlugEnum,
@@ -340,11 +339,11 @@ export class Gradient {
     });
 
     return new RagCollection({
+      chunker: ragCollection.chunker,
       files: ragCollection.files,
       filesApiManager: this.filesApiManager,
       id: ragCollection.id,
       name: ragCollection.name,
-      parser: ragCollection.parser,
       ragApi: this.ragApi,
       workspaceId: this.workspaceId,
     });
@@ -361,13 +360,13 @@ export class Gradient {
     });
 
     return data.ragCollections.map(
-      ({ id, name, parser }) =>
+      ({ id, name, chunker }) =>
         new RagCollection({
+          chunker,
           files: [],
           filesApiManager: this.filesApiManager,
           id,
           name,
-          parser,
           ragApi: this.ragApi,
           workspaceId: this.workspaceId,
         })
@@ -375,9 +374,9 @@ export class Gradient {
   };
 
   public readonly createRagCollection = async ({
+    chunker,
     filepaths,
     name,
-    parser,
     slug,
   }: CreateRagCollectionParams): Promise<RagCollection> => {
     let files: CreateRagCollectionBodyParams["files"];
@@ -393,39 +392,13 @@ export class Gradient {
       }));
     }
 
-    let ragParser: CreateRagCollectionBodyParamsParser = null;
-    if (!isUndefined(parser)) {
-      switch (parser.parserType) {
-        case "simpleNodeParser": {
-          ragParser = {
-            chunkSize: parser.chunkSize,
-            chunkOverlap: parser.chunkOverlap,
-            parserType: "simpleNodeParser",
-          };
-          break;
-        }
-        case "sentenceWindowNodeParser": {
-          ragParser = {
-            chunkSize: parser.chunkSize,
-            chunkOverlap: parser.chunkOverlap,
-            parserType: "sentenceWindowNodeParser",
-            windowSize: parser.windowSize,
-          };
-          break;
-        }
-        default: {
-          expectNever(parser);
-        }
-      }
-    }
-
     const {
       data: { id },
     } = await this.ragApi.createRagCollection({
       createRagCollectionBodyParams: {
         files,
         name,
-        parser: ragParser,
+        chunker,
         slug,
       },
       xGradientWorkspaceId: this.workspaceId,

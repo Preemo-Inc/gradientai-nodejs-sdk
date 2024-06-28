@@ -831,6 +831,12 @@ export interface CreateModelSuccess {
 export interface CreateRagCollectionBodyParams {
     /**
      * 
+     * @type {CreateRagCollectionBodyParamsChunker}
+     * @memberof CreateRagCollectionBodyParams
+     */
+    'chunker'?: CreateRagCollectionBodyParamsChunker | null;
+    /**
+     * 
      * @type {Array<CreateRagCollectionBodyParamsFilesInner>}
      * @memberof CreateRagCollectionBodyParams
      */
@@ -841,12 +847,6 @@ export interface CreateRagCollectionBodyParams {
      * @memberof CreateRagCollectionBodyParams
      */
     'name': string;
-    /**
-     * 
-     * @type {CreateRagCollectionBodyParamsParser}
-     * @memberof CreateRagCollectionBodyParams
-     */
-    'parser'?: CreateRagCollectionBodyParamsParser | null;
     /**
      * 
      * @type {string}
@@ -860,6 +860,12 @@ export const CreateRagCollectionBodyParamsSlugEnum = {
 } as const;
 
 export type CreateRagCollectionBodyParamsSlugEnum = typeof CreateRagCollectionBodyParamsSlugEnum[keyof typeof CreateRagCollectionBodyParamsSlugEnum];
+
+/**
+ * @type CreateRagCollectionBodyParamsChunker
+ * @export
+ */
+export type CreateRagCollectionBodyParamsChunker = { chunkerType: 'fileChunker' } & FileChunker | { chunkerType: 'meaningBasedChunker' } & MeaningBasedChunker | { chunkerType: 'normalChunker' } & NormalChunker | { chunkerType: 'sentenceWithContextChunker' } & SentenceWithContextChunker;
 
 /**
  * 
@@ -880,12 +886,6 @@ export interface CreateRagCollectionBodyParamsFilesInner {
      */
     'name': string;
 }
-/**
- * @type CreateRagCollectionBodyParamsParser
- * @export
- */
-export type CreateRagCollectionBodyParamsParser = { parserType: 'sentenceWindowNodeParser' } & SentenceWindowNodeParser | { parserType: 'simpleNodeParser' } & SimpleNodeParser;
-
 /**
  * 
  * @export
@@ -1219,6 +1219,26 @@ export const ExtractPdfSuccessPagesInnerTextBlocksInnerKindEnum = {
 } as const;
 
 export type ExtractPdfSuccessPagesInnerTextBlocksInnerKindEnum = typeof ExtractPdfSuccessPagesInnerTextBlocksInnerKindEnum[keyof typeof ExtractPdfSuccessPagesInnerTextBlocksInnerKindEnum];
+
+/**
+ * 
+ * @export
+ * @interface FileChunker
+ */
+export interface FileChunker {
+    /**
+     * 
+     * @type {string}
+     * @memberof FileChunker
+     */
+    'chunkerType': FileChunkerChunkerTypeEnum;
+}
+
+export const FileChunkerChunkerTypeEnum = {
+    FileChunker: 'fileChunker'
+} as const;
+
+export type FileChunkerChunkerTypeEnum = typeof FileChunkerChunkerTypeEnum[keyof typeof FileChunkerChunkerTypeEnum];
 
 /**
  * 
@@ -1752,6 +1772,12 @@ export interface GetRagCollectionError {
 export interface GetRagCollectionSuccess {
     /**
      * 
+     * @type {ListRagCollectionsSuccessRagCollectionsInnerChunker}
+     * @memberof GetRagCollectionSuccess
+     */
+    'chunker': ListRagCollectionsSuccessRagCollectionsInnerChunker;
+    /**
+     * 
      * @type {string}
      * @memberof GetRagCollectionSuccess
      */
@@ -1780,12 +1806,6 @@ export interface GetRagCollectionSuccess {
      * @memberof GetRagCollectionSuccess
      */
     'name': string;
-    /**
-     * 
-     * @type {ListRagCollectionsSuccessRagCollectionsInnerParser}
-     * @memberof GetRagCollectionSuccess
-     */
-    'parser': ListRagCollectionsSuccessRagCollectionsInnerParser;
     /**
      * 
      * @type {string}
@@ -1949,6 +1969,12 @@ export interface ListRagCollectionsSuccess {
 export interface ListRagCollectionsSuccessRagCollectionsInner {
     /**
      * 
+     * @type {ListRagCollectionsSuccessRagCollectionsInnerChunker}
+     * @memberof ListRagCollectionsSuccessRagCollectionsInner
+     */
+    'chunker': ListRagCollectionsSuccessRagCollectionsInnerChunker;
+    /**
+     * 
      * @type {string}
      * @memberof ListRagCollectionsSuccessRagCollectionsInner
      */
@@ -1973,12 +1999,6 @@ export interface ListRagCollectionsSuccessRagCollectionsInner {
     'name': string;
     /**
      * 
-     * @type {ListRagCollectionsSuccessRagCollectionsInnerParser}
-     * @memberof ListRagCollectionsSuccessRagCollectionsInner
-     */
-    'parser': ListRagCollectionsSuccessRagCollectionsInnerParser;
-    /**
-     * 
      * @type {string}
      * @memberof ListRagCollectionsSuccessRagCollectionsInner
      */
@@ -1992,80 +2012,188 @@ export const ListRagCollectionsSuccessRagCollectionsInnerSlugEnum = {
 export type ListRagCollectionsSuccessRagCollectionsInnerSlugEnum = typeof ListRagCollectionsSuccessRagCollectionsInnerSlugEnum[keyof typeof ListRagCollectionsSuccessRagCollectionsInnerSlugEnum];
 
 /**
- * @type ListRagCollectionsSuccessRagCollectionsInnerParser
+ * @type ListRagCollectionsSuccessRagCollectionsInnerChunker
  * @export
  */
-export type ListRagCollectionsSuccessRagCollectionsInnerParser = ListRagCollectionsSuccessRagCollectionsInnerParserOneOf | ListRagCollectionsSuccessRagCollectionsInnerParserOneOf1;
+export type ListRagCollectionsSuccessRagCollectionsInnerChunker = ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf | ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf1 | ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf2 | ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf3;
 
 /**
  * 
  * @export
- * @interface ListRagCollectionsSuccessRagCollectionsInnerParserOneOf
+ * @interface ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf
  */
-export interface ListRagCollectionsSuccessRagCollectionsInnerParserOneOf {
-    /**
-     * 
-     * @type {number}
-     * @memberof ListRagCollectionsSuccessRagCollectionsInnerParserOneOf
-     */
-    'chunkOverlap': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ListRagCollectionsSuccessRagCollectionsInnerParserOneOf
-     */
-    'chunkSize': number;
+export interface ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf {
     /**
      * 
      * @type {string}
-     * @memberof ListRagCollectionsSuccessRagCollectionsInnerParserOneOf
+     * @memberof ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf
      */
-    'parserType': ListRagCollectionsSuccessRagCollectionsInnerParserOneOfParserTypeEnum;
-    /**
-     * 
-     * @type {number}
-     * @memberof ListRagCollectionsSuccessRagCollectionsInnerParserOneOf
-     */
-    'windowSize': number;
+    'chunkerType': ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOfChunkerTypeEnum;
 }
 
-export const ListRagCollectionsSuccessRagCollectionsInnerParserOneOfParserTypeEnum = {
-    SentenceWindowNodeParser: 'sentenceWindowNodeParser'
+export const ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOfChunkerTypeEnum = {
+    FileChunker: 'fileChunker'
 } as const;
 
-export type ListRagCollectionsSuccessRagCollectionsInnerParserOneOfParserTypeEnum = typeof ListRagCollectionsSuccessRagCollectionsInnerParserOneOfParserTypeEnum[keyof typeof ListRagCollectionsSuccessRagCollectionsInnerParserOneOfParserTypeEnum];
+export type ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOfChunkerTypeEnum = typeof ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOfChunkerTypeEnum[keyof typeof ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOfChunkerTypeEnum];
 
 /**
  * 
  * @export
- * @interface ListRagCollectionsSuccessRagCollectionsInnerParserOneOf1
+ * @interface ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf1
  */
-export interface ListRagCollectionsSuccessRagCollectionsInnerParserOneOf1 {
-    /**
-     * 
-     * @type {number}
-     * @memberof ListRagCollectionsSuccessRagCollectionsInnerParserOneOf1
-     */
-    'chunkOverlap': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ListRagCollectionsSuccessRagCollectionsInnerParserOneOf1
-     */
-    'chunkSize': number;
+export interface ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf1 {
     /**
      * 
      * @type {string}
-     * @memberof ListRagCollectionsSuccessRagCollectionsInnerParserOneOf1
+     * @memberof ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf1
      */
-    'parserType': ListRagCollectionsSuccessRagCollectionsInnerParserOneOf1ParserTypeEnum;
+    'chunkerType': ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf1ChunkerTypeEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf1
+     */
+    'contextSentences': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf1
+     */
+    'overlap': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf1
+     */
+    'size': number;
 }
 
-export const ListRagCollectionsSuccessRagCollectionsInnerParserOneOf1ParserTypeEnum = {
-    SimpleNodeParser: 'simpleNodeParser'
+export const ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf1ChunkerTypeEnum = {
+    SentenceWithContextChunker: 'sentenceWithContextChunker'
 } as const;
 
-export type ListRagCollectionsSuccessRagCollectionsInnerParserOneOf1ParserTypeEnum = typeof ListRagCollectionsSuccessRagCollectionsInnerParserOneOf1ParserTypeEnum[keyof typeof ListRagCollectionsSuccessRagCollectionsInnerParserOneOf1ParserTypeEnum];
+export type ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf1ChunkerTypeEnum = typeof ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf1ChunkerTypeEnum[keyof typeof ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf1ChunkerTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf2
+ */
+export interface ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf2 {
+    /**
+     * 
+     * @type {string}
+     * @memberof ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf2
+     */
+    'chunkerType': ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf2ChunkerTypeEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf2
+     */
+    'overlap': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf2
+     */
+    'sentenceGroupLength': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf2
+     */
+    'similiarityPercentThreshold': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf2
+     */
+    'size': number;
+}
+
+export const ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf2ChunkerTypeEnum = {
+    MeaningBasedChunker: 'meaningBasedChunker'
+} as const;
+
+export type ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf2ChunkerTypeEnum = typeof ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf2ChunkerTypeEnum[keyof typeof ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf2ChunkerTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf3
+ */
+export interface ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf3 {
+    /**
+     * 
+     * @type {string}
+     * @memberof ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf3
+     */
+    'chunkerType': ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf3ChunkerTypeEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf3
+     */
+    'overlap': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf3
+     */
+    'size': number;
+}
+
+export const ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf3ChunkerTypeEnum = {
+    NormalChunker: 'normalChunker'
+} as const;
+
+export type ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf3ChunkerTypeEnum = typeof ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf3ChunkerTypeEnum[keyof typeof ListRagCollectionsSuccessRagCollectionsInnerChunkerOneOf3ChunkerTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface MeaningBasedChunker
+ */
+export interface MeaningBasedChunker {
+    /**
+     * 
+     * @type {string}
+     * @memberof MeaningBasedChunker
+     */
+    'chunkerType': MeaningBasedChunkerChunkerTypeEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof MeaningBasedChunker
+     */
+    'overlap'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof MeaningBasedChunker
+     */
+    'sentenceGroupLength'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof MeaningBasedChunker
+     */
+    'similiarityPercentThreshold'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof MeaningBasedChunker
+     */
+    'size'?: number | null;
+}
+
+export const MeaningBasedChunkerChunkerTypeEnum = {
+    MeaningBasedChunker: 'meaningBasedChunker'
+} as const;
+
+export type MeaningBasedChunkerChunkerTypeEnum = typeof MeaningBasedChunkerChunkerTypeEnum[keyof typeof MeaningBasedChunkerChunkerTypeEnum];
 
 /**
  * 
@@ -2110,6 +2238,38 @@ export const ModelAdapterTypeEnum = {
 } as const;
 
 export type ModelAdapterTypeEnum = typeof ModelAdapterTypeEnum[keyof typeof ModelAdapterTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface NormalChunker
+ */
+export interface NormalChunker {
+    /**
+     * 
+     * @type {string}
+     * @memberof NormalChunker
+     */
+    'chunkerType': NormalChunkerChunkerTypeEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof NormalChunker
+     */
+    'overlap'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof NormalChunker
+     */
+    'size'?: number | null;
+}
+
+export const NormalChunkerChunkerTypeEnum = {
+    NormalChunker: 'normalChunker'
+} as const;
+
+export type NormalChunkerChunkerTypeEnum = typeof NormalChunkerChunkerTypeEnum[keyof typeof NormalChunkerChunkerTypeEnum];
 
 /**
  * 
@@ -2159,72 +2319,40 @@ export interface PersonalizeDocumentSuccess {
 /**
  * 
  * @export
- * @interface SentenceWindowNodeParser
+ * @interface SentenceWithContextChunker
  */
-export interface SentenceWindowNodeParser {
-    /**
-     * 
-     * @type {number}
-     * @memberof SentenceWindowNodeParser
-     */
-    'chunkOverlap'?: number | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof SentenceWindowNodeParser
-     */
-    'chunkSize'?: number | null;
+export interface SentenceWithContextChunker {
     /**
      * 
      * @type {string}
-     * @memberof SentenceWindowNodeParser
+     * @memberof SentenceWithContextChunker
      */
-    'parserType': SentenceWindowNodeParserParserTypeEnum;
+    'chunkerType': SentenceWithContextChunkerChunkerTypeEnum;
     /**
      * 
      * @type {number}
-     * @memberof SentenceWindowNodeParser
+     * @memberof SentenceWithContextChunker
      */
-    'windowSize'?: number | null;
+    'contextSentences'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof SentenceWithContextChunker
+     */
+    'overlap'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof SentenceWithContextChunker
+     */
+    'size'?: number | null;
 }
 
-export const SentenceWindowNodeParserParserTypeEnum = {
-    SentenceWindowNodeParser: 'sentenceWindowNodeParser'
+export const SentenceWithContextChunkerChunkerTypeEnum = {
+    SentenceWithContextChunker: 'sentenceWithContextChunker'
 } as const;
 
-export type SentenceWindowNodeParserParserTypeEnum = typeof SentenceWindowNodeParserParserTypeEnum[keyof typeof SentenceWindowNodeParserParserTypeEnum];
-
-/**
- * 
- * @export
- * @interface SimpleNodeParser
- */
-export interface SimpleNodeParser {
-    /**
-     * 
-     * @type {number}
-     * @memberof SimpleNodeParser
-     */
-    'chunkOverlap'?: number | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof SimpleNodeParser
-     */
-    'chunkSize'?: number | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof SimpleNodeParser
-     */
-    'parserType': SimpleNodeParserParserTypeEnum;
-}
-
-export const SimpleNodeParserParserTypeEnum = {
-    SimpleNodeParser: 'simpleNodeParser'
-} as const;
-
-export type SimpleNodeParserParserTypeEnum = typeof SimpleNodeParserParserTypeEnum[keyof typeof SimpleNodeParserParserTypeEnum];
+export type SentenceWithContextChunkerChunkerTypeEnum = typeof SentenceWithContextChunkerChunkerTypeEnum[keyof typeof SentenceWithContextChunkerChunkerTypeEnum];
 
 /**
  * 
